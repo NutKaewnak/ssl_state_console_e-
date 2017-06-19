@@ -4,9 +4,10 @@
     <main>
       <div class="left-side">
         <span class="title">
-          Welcome to your new project!
+          Robot Information
         </span>
         <system-information></system-information>
+        <robot-selection></robot-selection>
       </div>
 
       <div class="right-side">
@@ -30,11 +31,13 @@
 </template>
 
 <script>
-  import SystemInformation from './LandingPage/SystemInformation'
+  import RobotSelection from './LandingPage/RobotSelection'
 
   export default {
     name: 'landing-page',
-    components: { SystemInformation },
+    components: {
+      RobotSelection
+    },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
