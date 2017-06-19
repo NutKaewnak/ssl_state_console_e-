@@ -1,14 +1,15 @@
 <template>
   <div>
     <div class="title">Robot</div>
-    <div class="items">
-      <div class="item">
-        <div class="name">IP:</div>
-        <div class="value">{{ ip }}</div>
-      </div>
-      <div class="item">
-        <div class="name">Platform:</div>
-        <div class="value">{{ platform }}</div>
+    <div v-for="i in robots">
+      <div class="items">
+        <div class="item">
+          <div class="name">IP:</div><div class="value">{{i.ip}}</div>
+        </div>
+        <div class="item">
+          <div class="name">Platform</div><div class="value">{{i.platform}}</div>
+        </div>
+        <div><button :class="{alt:!(robot === i.ip)}" @click="selectRobot(i.ip)">Select</button></div>
       </div>
     </div>
   </div>
@@ -16,10 +17,10 @@
 
 <script>
   export default {
-    data () {
-      return {
-        ip: '192.168.1.1',
-        platform: 'SSL'
+    props: ['robot', 'robots'],
+    methods: {
+      selectRobot (ip) {
+        this.$emit('selectRobot', ip)
       }
     }
   }
@@ -49,5 +50,24 @@
   .item .value {
     color: #35495e;
     font-weight: bold;
+  }
+
+  button {
+    font-size: .8em;
+    cursor: pointer;
+    outline: none;
+    padding: 0.75em 2em;
+    border-radius: 2em;
+    display: inline-block;
+    color: #fff;
+    background-color: #4fc08d;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+    border: 1px solid #4fc08d;
+  }
+
+  button.alt {
+    color: #42b983;
+    background-color: transparent;
   }
 </style>
