@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper">
-    <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
+    <div id="logo">SSL Console</div>
     <main>
       <div class="left-side">
         <span class="title">
@@ -75,8 +75,12 @@ export default {
   }
 
   #logo {
+    color: #2c3e50;
     height: auto;
-    margin-bottom: 20px;
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: -15px;
+    margin-left: -15px;
     width: 420px;
   }
 
