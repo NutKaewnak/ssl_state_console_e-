@@ -14,7 +14,7 @@
       </div>
 
       <div class="right-side">
-        
+        <Console></Console>
       </div>
     </main>
   </div>
@@ -22,6 +22,7 @@
 
 <script>
 import RobotSelection from './LandingPage/RobotSelection'
+import Console from './LandingPage/Console'
 
 export default {
   name: 'landing-page',
@@ -41,7 +42,8 @@ export default {
     }
   },
   components: {
-    RobotSelection
+    RobotSelection,
+    Console
   },
   methods: {
     selectRobot (ip) {
