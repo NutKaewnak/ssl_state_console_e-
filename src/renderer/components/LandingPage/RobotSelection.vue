@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="container">
+    <span style="color: #2c3e50; font-size: 20px; font-weight: bold; margin-bottom: 6px;">
+      Robot Information
+    </span>
     <div class="title">Robot</div>
     <div v-for="i in robots">
       <div class="items">
@@ -33,6 +36,14 @@
     font-weight: initial;
     letter-spacing: .25px;
     margin-top: 10px;
+  }
+
+  .container {
+    padding: 20px 10px 50px 10px;
+    margin-left: -10px;
+    border: 1px solid gray;
+    width: 200px;
+    min-height: 400px;
   }
 
   .items { margin-top: 8px; }

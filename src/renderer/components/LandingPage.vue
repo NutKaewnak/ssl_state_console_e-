@@ -3,9 +3,6 @@
     <div id="logo">SSL Console</div>
     <main>
       <div class="left-side">
-        <span class="title">
-          Robot Information
-        </span>
         <robot-selection
         :robot='robot'
         :robots='robots'
