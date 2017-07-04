@@ -24,13 +24,6 @@
 import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 
-var jsPlumb = require('../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
-
-jsPlumb.importDefaults({
-  Connector: [ 'Bezier', { curviness: 150 } ],
-  Anchors: [ 'TopCenter', 'BottomCenter' ]
-})
-
 export default {
   name: 'landing-page',
   data () {

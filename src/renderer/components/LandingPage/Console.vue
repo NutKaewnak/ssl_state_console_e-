@@ -1,21 +1,25 @@
 <template>
   <div>
-    <div class="title">Robot</div>
-    <div v-for="i in robots">
-      <div class="items">
-        <div class="item">
-          <div class="name">IP:</div><div class="value">{{i.ip}}</div>
-        </div>
-        <div class="item">
-          <div class="name">Platform</div><div class="value">{{i.platform}}</div>
-        </div>
-        <div><button :class="{alt:!(robot === i.ip)}" @click="selectRobot(i.ip)">Select</button></div>
-      </div>
+    <div id="diagramContainer">
+        <vue-draggable-resizable id="item_left" class="item"></vue-draggable-resizable>
+        <vue-draggable-resizable id="item_right" class="item"></vue-draggable-resizable>
     </div>
   </div>
 </template>
 
 <script>
+  var jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
+
+  jsPlumb.ready(function () {
+    jsPlumb.connect({
+      source: 'item_left',
+      target: 'item_right',
+      endpoint: 'Rectangle'
+    })
+
+    jsPlumb.draggable('item_left', {containment: 'parent'})
+    jsPlumb.draggable('item_right', {containment: 'parent'})
+  })
   export default {
     props: ['robot', 'robots'],
     methods: {
@@ -66,5 +70,19 @@
   button.alt {
     color: #42b983;
     background-color: transparent;
+  }
+
+  #diagramContainer {
+    border: 1px solid gray;
+    height: 500px; 
+    width: 500px;
+    position: relative;
+  }
+        
+  .item {
+      top:20px;
+      position: absolute;
+      height:80px; width: 80px;
+      border: 1px solid blue;
   }
 </style>
