@@ -1,6 +1,6 @@
 {
   "name": "ssl_state_console_e-",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "nutkaewnak <nut-boss@hotmail.com>",
   "description": "Console for SSL robot using electron",
   "license": "BSD",
@@ -61,6 +61,7 @@
     "vue": "^2.3.3",
     "vue-draggable-resizable": "^1.1.0",
     "vue-electron": "^1.0.6",
+    "vue-ripple": "^1.0.2",
     "vue-router": "^2.5.3",
     "vuex": "^2.3.1"
   },
