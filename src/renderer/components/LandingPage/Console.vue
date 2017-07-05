@@ -4,28 +4,22 @@
     @mouseup="getMousePos"
     @touchend="getMousePos"
     id="diagramContainer" 
-    v-on:dblclick="jsPlumb.newNode(cursorPos.x, cursorPos.y)">
-      <div id="item_left" class="w">
-      item_left</div>
-      <div id="item_right" class="w">
-      item_right</div>
-
-      <div class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan" id="canvas">
-        <div class="w" id="opened">BEGIN
-          <div class="ep" action="begin"></div>
-        </div>
-        <div class="w" id="phone1">PHONE INTERVIEW 1
-          <div class="ep" action="phone1"></div>
-        </div>
-        <div class="w" id="phone2">PHONE INTERVIEW 2
-          <div class="ep" action="phone2"></div>
-        </div>
-        <div class="w" id="inperson">IN PERSON
-          <div class="ep" action="inperson"></div>
-        </div>
-        <div class="w" id="rejected">REJECTED
-          <div class="ep" action="rejected"></div>
-        </div>
+    v-on:dblclick="newNode(cursorPos.x, cursorPos.y)"
+    class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan">
+      <div class="w" id="opened">BEGIN
+        <div class="ep" action="begin"></div>
+      </div>
+      <div class="w" id="phone1">MOVE 1, 0
+        <div class="ep" action="move"></div>
+      </div>
+      <div class="w" id="rotate">ROTATE 90
+        <div class="ep" action="rotate"></div>
+      </div>
+      <div class="w" id="inperson">MOVE 1, 0
+        <div class="ep" action="move"></div>
+      </div>
+      <div class="w" id="kick">KICK
+        <div class="ep" action="kick"></div>
       </div>
     </div>
   </div>
@@ -34,44 +28,44 @@
 <script>
 var jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
 
-jsPlumb.ready(function () {
-  var instance = jsPlumb.getInstance({
-    endpoint: ['Dot', {radius: 2}],
-    HoverPaintStyle: {stroke: '#1e8151', strokeWidth: 2},
-    ConnectionOverlays: [
-      [ 'Arrow', {
-        location: 1,
-        id: 'arrow',
-        length: 14,
-        foldback: 0.8
-      } ],
-      ['Label', { label: 'FOO', id: 'label', cssClass: 'aLabel' }]
-    ],
-    Container: 'diagramContainer'  // Container: 'canvas'
-  })
-  window.jsp = instance
+var instance = null
 
-  instance.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
-  instance.connect({
-    source: 'item_left',
-    target: 'item_right'
+function initNode (el) {
+  // initialise draggable elements.
+  instance.draggable(el)
+
+  instance.makeSource(el, {
+    filter: '.ep',
+    anchor: 'Continuous',
+    connectorStyle: { stroke: '#5c96bc', strokeWidth: 2, outlineStroke: 'transparent', outlineWidth: 4 },
+    connectionType: 'basic',
+    extract: {
+      'action': 'the-action'
+    },
+    maxConnections: 5,
+    onMaxConnections: function (info, e) {
+      alert('Maximum connections (' + info.maxConnections + ') reached')
+    }
   })
 
-  // var windows = jsPlumb.getSelector('.statemachine-demo .w')
-
-  instance.bind('click', function (c) {
-    instance.deleteConnection(c)
+  instance.makeTarget(el, {
+    dropOptions: { hoverClass: 'dragHover' },
+    anchor: 'Continuous',
+    allowLoopback: true
   })
 
-  instance.draggable('item_left', {containment: 'parent'})
-  instance.draggable('item_right', {containment: 'parent'})
-})
+  // this is not part of the core demo functionality; it is a means for the Toolkit edition's wrapped
+  // version of this demo to find out about new nodes being added.
+  //
+  instance.fire('jsPlumbDemoNodeAdded', el)
+}
 
 export default {
   props: ['robot', 'robots'],
   data () {
     return {
-      cursorPos: {}
+      cursorPos: {},
+      instance: null
     }
   },
   methods: {
@@ -80,7 +74,70 @@ export default {
         x: e.clientX,
         y: e.clientY
       }
+    },
+    newNode (x, y) {
+      var d = document.createElement('div')
+      var id = Math.random() * 1000
+      d.className = 'w'
+      d.id = id
+      d.innerHTML = id
+      d.style.left = x + 'px'
+      d.style.top = y + 'px'
+      instance.getContainer().appendChild(d)
+      this.initNode(d)
+      return d
     }
+  },
+  mounted () {
+    jsPlumb.ready(function () {
+      instance = jsPlumb.getInstance({
+        endpoint: ['Dot', {radius: 2}],
+        HoverPaintStyle: {stroke: '#1e8151', strokeWidth: 2},
+        ConnectionOverlays: [
+          [ 'Arrow', {
+            location: 1,
+            id: 'arrow',
+            length: 14,
+            foldback: 0.8
+          } ],
+          ['Label', { label: 'FOO', id: 'label', cssClass: 'aLabel' }]
+        ],
+        Container: 'diagramContainer'  // Container: 'canvas'
+      })
+
+      window.jsp = instance
+
+      instance.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
+
+      instance.bind('connection', function (info) {
+        info.connection.getOverlay('label').setLabel(info.connection.id)
+      })
+
+      var windows = jsPlumb.getSelector('.statemachine-demo .w')
+
+      instance.bind('click', function (c) {
+        instance.deleteConnection(c)
+      })
+
+      instance.batch(function () {
+        for (var i = 0; i < windows.length; i++) {
+          console.log(windows[i])
+          initNode(windows[i], true)
+        }
+
+        instance.connect({ source: 'opened', target: 'phone1', type: 'basic' })
+        instance.connect({ source: 'phone1', target: 'phone1', type: 'basic' })
+        instance.connect({ source: 'phone1', target: 'inperson', type: 'basic' })
+      })
+
+      instance.connect({
+        source: 'rotate',
+        target: 'kick',
+        type: 'basic'
+      })
+
+      jsPlumb.fire('jsPlumbDemoLoaded', instance)
+    })
   }
 }
 </script>
