@@ -245,12 +245,12 @@ export default {
   top: 23em;
 }
 
-#phone2 {
+#rotate {
   left: 28em;
   top: 24em;
 }
 
-#rejected {
+#kick {
   left: 10em;
   top: 35em;
 }

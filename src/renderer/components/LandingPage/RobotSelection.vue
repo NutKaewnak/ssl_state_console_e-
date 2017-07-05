@@ -41,7 +41,6 @@
   .container {
     padding: 20px 10px 50px 10px;
     margin-left: -10px;
-    border: 1px solid gray;
     width: 200px;
     min-height: 400px;
   }
