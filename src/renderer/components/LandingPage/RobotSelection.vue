@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <span style="color: #2c3e50; font-size: 20px; font-weight: bold; margin-bottom: 6px;">
+    <span>
       Robot Information
     </span>
     <div class="title">Robot</div>

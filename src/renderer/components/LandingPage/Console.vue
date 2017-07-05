@@ -84,7 +84,7 @@ export default {
       d.style.left = x + 'px'
       d.style.top = y + 'px'
       instance.getContainer().appendChild(d)
-      this.initNode(d)
+      initNode(d)
       return d
     }
   },
