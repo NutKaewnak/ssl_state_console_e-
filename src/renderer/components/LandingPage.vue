@@ -85,7 +85,7 @@ export default {
 
   main {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   main > div { flex-basis: 50%; }
@@ -93,6 +93,13 @@ export default {
   .left-side {
     display: flex;
     flex-direction: column;
+    flex: 1 40%;
+  }
+
+  .right-side {
+    display: flex;
+    flex-direction: column;
+    flex: 1 100%;
   }
 
   .welcome {
