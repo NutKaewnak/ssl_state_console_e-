@@ -146,8 +146,8 @@ export default {
 @import url('../../../../node_modules/jsplumb/dist/css/jsplumbtoolkit-defaults.css');
 #diagramContainer {
   border: 1px solid gray;
-  height: 500px; 
-  width: 500px;
+  height: 70vh; 
+  width: 50vw;
   position: relative;
 }
       

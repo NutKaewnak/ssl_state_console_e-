@@ -48,6 +48,7 @@ app.on('activate', () => {
   }
 })
 
+require('./webSocketServer')
 /**
  * Auto Updater
  *
