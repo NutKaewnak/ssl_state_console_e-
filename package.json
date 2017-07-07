@@ -57,6 +57,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "bootstrap": "^3.3.7",
+    "bulma": "^0.4.3",
     "jsplumb": "^2.4.3",
     "path": "^0.12.7",
     "socket-io": "^1.0.0",

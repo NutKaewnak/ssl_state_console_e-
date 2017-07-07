@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="columns">
     <div
     @mouseup="getMousePos"
     @touchend="getMousePos"
     id="diagramContainer" 
     v-on:dblclick="newNode(cursorPos.x, cursorPos.y)"
-    class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan">
+    class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan column is-6">
       <div class="w" id="opened">BEGIN
         <div class="ep" action="begin"></div>
       </div>
@@ -21,6 +21,8 @@
       <div class="w" id="kick">KICK
         <div class="ep" action="kick"></div>
       </div>
+    </div>
+    <div class="column" style="border: 1px solid gray;">
     </div>
   </div>
 </template>

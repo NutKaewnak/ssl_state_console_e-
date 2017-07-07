@@ -51,6 +51,7 @@ export default {
 </script>
 
 <style>
+  @import '../../../node_modules/bulma/css/bulma.css';
   @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
   * {
