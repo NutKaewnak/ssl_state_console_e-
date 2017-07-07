@@ -126,12 +126,12 @@ export default {
         }
 
         instance.connect({ source: 'opened', target: 'phone1', type: 'basic' })
-        instance.connect({ source: 'phone1', target: 'phone1', type: 'basic' })
-        instance.connect({ source: 'phone1', target: 'inperson', type: 'basic' })
+        instance.connect({ source: 'phone1', target: 'rotate', type: 'basic' })
+        instance.connect({ source: 'rotate', target: 'inperson', type: 'basic' })
       })
 
       instance.connect({
-        source: 'rotate',
+        source: 'inperson',
         target: 'kick',
         type: 'basic'
       })

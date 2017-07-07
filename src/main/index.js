@@ -1,5 +1,5 @@
 'use strict'
-
+// import 'bootstrap/dist/css/bootstrap.css'
 import { app, BrowserWindow } from 'electron'
 
 /**
