@@ -23,6 +23,12 @@
       </div>
     </div>
     <div class="column" style="border: 1px solid gray;">
+      <a id="move-btn">MOVE
+      </a><br/>
+      <a id="rotate-btn">ROTATE
+      </a><br/>
+      <a id="kick-btn">KICK
+      </a>
     </div>
   </div>
 </template>
