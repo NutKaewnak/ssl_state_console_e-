@@ -42,6 +42,18 @@ var jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsP
 
 var instance = null
 
+const WebSocket = require('ws')
+let ws = new WebSocket('ws://localhost:8081')
+
+ws.onopen = function () {
+  console.log('Connected!')
+}
+
+ws.onmessage = function (evt) {
+  var data = JSON.parse(evt.data)
+  console.log(data)
+}
+
 function initNode (el) {
   // initialise draggable elements.
   instance.draggable(el)
@@ -74,14 +86,6 @@ function initNode (el) {
 
 export default {
   props: ['robot', 'robots'],
-  sockets: {
-    connect: function () {
-      console.log('socket connected')
-    },
-    customEmit: function () {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-    }
-  },
   data () {
     return {
       cursorPos: {},
@@ -109,7 +113,7 @@ export default {
     },
     sendCommand () {
       console.log('sendnaja')
-      this.$socket.emit('send', {id: 0, type: 3, data: '125125125125'})
+      ws.send(JSON.stringify({id: 0, type: 3, data: '125125125125'}))
     }
   },
   mounted () {
