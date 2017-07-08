@@ -74,6 +74,14 @@ function initNode (el) {
 
 export default {
   props: ['robot', 'robots'],
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    customEmit: function () {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   data () {
     return {
       cursorPos: {},
@@ -100,7 +108,8 @@ export default {
       return d
     },
     sendCommand () {
-      return null
+      console.log('sendnaja')
+      this.$socket.emit('send', {id: 0, type: 3, data: '125125125125'})
     }
   },
   mounted () {
