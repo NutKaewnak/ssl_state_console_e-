@@ -1,9 +1,7 @@
 <template>
   <div class="container">
-    <span>
-      Robot Information
-    </span>
-    <div class="title">Robot</div>
+    <div class="title">
+      Robot Information</div>
     <div v-for="i in robots">
       <div class="items">
         <div class="item">

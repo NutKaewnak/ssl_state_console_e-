@@ -53,6 +53,7 @@ export default {
 <style>
   @import '../../../node_modules/bulma/css/bulma.css';
   @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+  @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
 
   * {
     box-sizing: border-box;
@@ -75,7 +76,7 @@ export default {
   }
 
   #logo {
-    color: #2c3e50;
+    color: #560f35;
     height: auto;
     font-size: 50px;
     font-weight: bold;

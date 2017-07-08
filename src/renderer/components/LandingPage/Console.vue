@@ -22,13 +22,17 @@
         <div class="ep" action="kick"></div>
       </div>
     </div>
-    <div class="column" style="border: 1px solid gray;">
-      <a id="move-btn">MOVE
-      </a><br/>
-      <a id="rotate-btn">ROTATE
-      </a><br/>
-      <a id="kick-btn">KICK
-      </a>
+    <div class="column box">
+      <div class="block">
+        <a class="button is-info is-outlined" id="move-btn">MOVE
+        </a><br/>
+        <a class="button is-info is-outlined" id="rotate-btn">ROTATE
+        </a><br/>
+        <a class="button is-info is-outlined" id="kick-btn">KICK
+        </a><br/>
+      </div>
+      <br/>
+      <a v-on:click="sendCommand()" class="button is-danger">BUILD AND RUN</a>
     </div>
   </div>
 </template>
@@ -94,6 +98,9 @@ export default {
       instance.getContainer().appendChild(d)
       initNode(d)
       return d
+    },
+    sendCommand () {
+      return null
     }
   },
   mounted () {
@@ -129,7 +136,6 @@ export default {
 
       instance.batch(function () {
         for (var i = 0; i < windows.length; i++) {
-          console.log(windows[i])
           initNode(windows[i], true)
         }
 
@@ -157,6 +163,7 @@ export default {
   height: 70vh; 
   width: 50vw;
   position: relative;
+  background-color: #ffefee
 }
       
 .item {
