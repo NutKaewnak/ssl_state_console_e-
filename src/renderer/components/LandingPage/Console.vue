@@ -39,11 +39,11 @@
 
 <script>
 var jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
-
+var omniDirectionVelTransform = require('./omniDirectionVelTransform.js')
 var instance = null
 
 const WebSocket = require('ws')
-let ws = new WebSocket('ws://localhost:8081')
+let ws = new WebSocket('ws://192.168.0.150:8081')
 
 ws.onopen = function () {
   console.log('Connected!')
@@ -100,6 +100,7 @@ export default {
       }
     },
     newNode (x, y) {
+      // Fix by 18th
       var d = document.createElement('div')
       var id = Math.random() * 1000
       d.className = 'w'
@@ -112,8 +113,15 @@ export default {
       return d
     },
     sendCommand () {
-      console.log('sendnaja')
-      ws.send(JSON.stringify({id: 0, type: 3, data: '125125125125'}))
+      console.log(omniDirectionVelTransform(1, 0, 0))
+      console.log(omniDirectionVelTransform(0, 0, 0))
+      setInterval(function () {
+        ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(1, 0, 0)}))
+      }, 2000)
+
+      setTimeout(function () {
+        ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+      }, 2000)
     }
   },
   mounted () {

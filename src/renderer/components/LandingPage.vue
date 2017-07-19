@@ -28,7 +28,7 @@ export default {
       robot: null,
       robots: [
         {
-          ip: '192.168.1.1',
+          ip: '192.168.0.150',
           platform: 'SSL'
         },
         {
