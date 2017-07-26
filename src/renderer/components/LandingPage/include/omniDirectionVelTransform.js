@@ -4,29 +4,33 @@ var BIAS_X1 = 0
 var BIAS_Y1 = 0
 var BIAS_X2 = 0.1
 var BIAS_Y2 = 0
-var BIAS_X3 = 0.125
+var BIAS_X3 = 0
 var BIAS_Y3 = 0
-var BIAS_X4 = 0
+var BIAS_X4 = 0.125
 var BIAS_Y4 = 0
+var BIAS_W1 = 0
+var BIAS_W2 = 0.05
+var BIAS_W3 = 0
+var BIAS_W4 = 0
 
 var GAIN_X_WHEEL1 = (0.361454 + BIAS_X1)
 var GAIN_Y_WHEEL1 = (0.272298 + BIAS_Y1)
-var GAIN_W_WHEEL1 = 0.196848
+var GAIN_W_WHEEL1 = (0.196848 + BIAS_W1)
 // var GAIN_W_WHEEL1  0.196848 * 2
 
 var GAIN_X_WHEEL2 = (-0.361454 + BIAS_X2)
 var GAIN_Y_WHEEL2 = (0.419347 + BIAS_Y2)
-var GAIN_W_WHEEL2 = 0.303152
+var GAIN_W_WHEEL2 = (0.303152 + BIAS_W2)
 // var GAIN_W_WHEEL2  0.303152 * 2
 
 var GAIN_X_WHEEL3 = (-0.361454 + BIAS_X3)
 var GAIN_Y_WHEEL3 = (-0.419347 + BIAS_Y3)
-var GAIN_W_WHEEL3 = 0.303152
+var GAIN_W_WHEEL3 = (0.303152 + BIAS_W3)
 // var GAIN_W_WHEEL3  0.303152 * 2
 
 var GAIN_X_WHEEL4 = (0.361454 + BIAS_X4)
 var GAIN_Y_WHEEL4 = (-0.272298 + BIAS_Y4)
-var GAIN_W_WHEEL4 = 0.196848
+var GAIN_W_WHEEL4 = (0.196848 + BIAS_W4)
 
 function convert3Digit (str) {
   return String('000' + str).slice(-3)

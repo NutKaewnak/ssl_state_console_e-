@@ -119,16 +119,88 @@ export default {
       ws = this.webSocket
 
       var command = setInterval(function () {
-        ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(1, 0, 0)}))
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
       }, 100)
+      await this.sleep(5000)
 
-      await this.sleep(1000)
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
+      await this.sleep(500)
 
-      await this.sleep(1000)
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+      }, 100)
+      await this.sleep(1555)  // 90
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+      }, 100)
+      await this.sleep(500)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+      }, 100)
+      await this.sleep(5000)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+      }, 100)
+      await this.sleep(500)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+      }, 100)
+      await this.sleep(1555)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+      }, 100)
+      await this.sleep(500)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+      }, 100)
+      await this.sleep(5000)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+      }, 100)
+      await this.sleep(500)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+      }, 100)
+      await this.sleep(1555)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+      }, 100)
+      await this.sleep(500)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+      }, 100)
+      await this.sleep(5000)
+
+      clearInterval(command)
+      command = setInterval(function () {
+        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+      }, 100)
+      await this.sleep(500)
+
       clearInterval(command)
     },
     sleep (ms) {
