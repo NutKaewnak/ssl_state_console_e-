@@ -35,8 +35,12 @@ export default {
           platform: 'SSL'
         },
         {
-          ip: '192.168.1.2',
+          ip: '192.168.0.153',
           platform: 'SSL'
+        },
+        {
+          ip: 'localhost',
+          platform: 'PC'
         }
       ],
       webSocket: null

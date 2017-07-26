@@ -50,8 +50,8 @@ ws.onopen = function () {
 }
 
 ws.onmessage = function (evt) {
-  var data = JSON.parse(evt.data)
-  console.log(data)
+  // var data = JSON.parse(evt.data)
+  // console.log(data)
 }
 
 function initNode (el) {
@@ -115,18 +115,27 @@ export default {
       initNode(d)
       return d
     },
-    sendCommand () {
-      setInterval(function () {
-        ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(1, 0, 0)}))
-      }, 2000)
+    async sendCommand () {
+      ws = this.webSocket
 
-      setTimeout(function () {
+      var command = setInterval(function () {
+        ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(1, 0, 0)}))
+      }, 100)
+
+      await this.sleep(1000)
+      clearInterval(command)
+      command = setInterval(function () {
         ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 2000)
+      }, 100)
+
+      await this.sleep(1000)
+      clearInterval(command)
+    },
+    sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
     }
   },
   mounted () {
-    ws = this.webSocket
     jsPlumb.ready(function () {
       instance = jsPlumb.getInstance({
         endpoint: ['Dot', {radius: 2}],
