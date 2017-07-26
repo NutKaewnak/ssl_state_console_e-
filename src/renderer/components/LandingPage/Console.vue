@@ -38,11 +38,12 @@
 </template>
 
 <script>
-var jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
-var omniDirectionVelTransform = require('./omniDirectionVelTransform.js')
+const jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
+const omniDirectionVelTransform = require('./include/omniDirectionVelTransform.js')
+const WebSocket = require('ws')
+
 var instance = null
 
-const WebSocket = require('ws')
 let ws = new WebSocket('ws://192.168.0.150:8081')
 
 ws.onopen = function () {
@@ -113,8 +114,6 @@ export default {
       return d
     },
     sendCommand () {
-      console.log(omniDirectionVelTransform(1, 0, 0))
-      console.log(omniDirectionVelTransform(0, 0, 0))
       setInterval(function () {
         ws.send(JSON.stringify({id: 0, type: 3, data: omniDirectionVelTransform(1, 0, 0)}))
       }, 2000)
