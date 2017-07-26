@@ -43,11 +43,10 @@ const omniDirectionVelTransform = require('./include/omniDirectionVelTransform.j
 const WebSocket = require('ws')
 
 var instance = null
-
-let ws = new WebSocket('ws://192.168.0.150:8081')
+let ws = new WebSocket('ws://localhost:8081')
 
 ws.onopen = function () {
-  console.log('Connected!')
+  console.log('Connected!' + ws.url)
 }
 
 ws.onmessage = function (evt) {
@@ -56,6 +55,9 @@ ws.onmessage = function (evt) {
 }
 
 function initNode (el) {
+  if (!instance) {
+    return
+  }
   // initialise draggable elements.
   instance.draggable(el)
 
@@ -86,7 +88,7 @@ function initNode (el) {
 }
 
 export default {
-  props: ['robot', 'robots'],
+  props: ['robot', 'robots', 'webSocket'],
   data () {
     return {
       cursorPos: {},
@@ -124,6 +126,7 @@ export default {
     }
   },
   mounted () {
+    ws = this.webSocket
     jsPlumb.ready(function () {
       instance = jsPlumb.getInstance({
         endpoint: ['Dot', {radius: 2}],

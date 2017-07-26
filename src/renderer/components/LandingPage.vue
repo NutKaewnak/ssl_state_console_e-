@@ -11,7 +11,10 @@
       </div>
 
       <div class="right-side">
-        <Console></Console>
+        <Console
+        :robot='robot'
+        :webSocket='webSocket'
+        ></Console>
       </div>
     </main>
   </div>
@@ -35,7 +38,8 @@ export default {
           ip: '192.168.1.2',
           platform: 'SSL'
         }
-      ]
+      ],
+      webSocket: null
     }
   },
   components: {
@@ -45,6 +49,11 @@ export default {
   methods: {
     selectRobot (ip) {
       this.robot = ip
+      this.initWebSocket()
+    },
+    initWebSocket () {
+      this.webSocket = new WebSocket('ws://' + this.robot + ':8081')
+      console.log(this.webSocket.url)
     }
   }
 }
