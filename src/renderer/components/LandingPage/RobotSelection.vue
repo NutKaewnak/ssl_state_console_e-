@@ -41,10 +41,10 @@
   }
 
   .container {
-    padding: 0px 10px 50px 10px;
+    padding: 0px 10px 0px 10px;
     margin-left: -10px;
     width: 200px;
-    height: 80vh;
+    height: 75vh;
     min-height: 400px;
     overflow: scroll;
   }

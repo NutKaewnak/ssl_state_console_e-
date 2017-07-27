@@ -24,6 +24,8 @@
 import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 
+var Robot = require('./LandingPage/include/RobotController.js')
+
 var os = require('os')
 
 export default {
@@ -35,33 +37,34 @@ export default {
         {
           ip: '192.168.0.150',
           name: 'Captain',
-          platform: 'SSL'
+          platform: 'SSL v.1'
         },
         {
           ip: '192.168.0.151',
           name: 'Hulk',
-          platform: 'SSL'
+          platform: 'SSL v.2'
         },
         {
-          ip: '192.168.0.153',
+          ip: '192.168.0.152',
           name: 'Ironman',
-          platform: 'SSL'
+          platform: 'SSL v.2'
         },
         {
           ip: '192.168.0.153',
           name: 'Thor',
-          platform: 'SSL'
+          platform: 'SSL v.2'
         },
         {
           ip: '192.168.0.154',
           name: 'Widow',
-          platform: 'SSL'
+          platform: 'SSL v.2'
         },
         {
           ip: 'localhost',
           platform: os.platform()
         }
       ],
+      robotInstance: {},
       webSocket: null
     }
   },
@@ -77,6 +80,17 @@ export default {
     initWebSocket () {
       this.webSocket = new WebSocket('ws://' + this.robot + ':8081')
       console.log(this.webSocket.url)
+    },
+    initRobot (_robot) {
+      this.robotInstance[_robot.ip] = new Robot(_robot.name, _robot.ip, _robot.platform)
+    }
+  },
+  mounted () {
+    for (var i = 0; i > this.robots.lenght; i++) {
+      this.initRobot(this.robots[i])
+    }
+    for (i = 0; i > this.robots.lenght; i++) {
+      this.initRobot(this.robots[i])
     }
   }
 }

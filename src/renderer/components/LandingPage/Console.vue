@@ -40,19 +40,8 @@
 <script>
 const jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
 const omniDirectionVelTransform = require('./include/omniDirectionVelTransform.js')
-const WebSocket = require('ws')
 
 var instance = null
-let ws = new WebSocket('ws://localhost:8081')
-
-ws.onopen = function () {
-  console.log('Connected!' + ws.url)
-}
-
-ws.onmessage = function (evt) {
-  // var data = JSON.parse(evt.data)
-  // console.log(data)
-}
 
 function initNode (el) {
   if (!instance) {
@@ -103,7 +92,7 @@ export default {
       }
     },
     newNode (x, y) {
-      // Fix by 18th
+      // Fix by 3th
       var d = document.createElement('div')
       var id = Math.random() * 1000
       d.className = 'w'
@@ -116,88 +105,86 @@ export default {
       return d
     },
     async sendCommand () {
-      ws = this.webSocket
-
       var command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
       }, 100)
       await this.sleep(5000)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
       await this.sleep(500)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
       }, 100)
       await this.sleep(1555)  // 90
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
       await this.sleep(500)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
       }, 100)
       await this.sleep(5000)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
       await this.sleep(500)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
       }, 100)
       await this.sleep(1555)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
       await this.sleep(500)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
       }, 100)
       await this.sleep(5000)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
       await this.sleep(500)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
       }, 100)
       await this.sleep(1555)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
       await this.sleep(500)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
       }, 100)
       await this.sleep(5000)
 
       clearInterval(command)
       command = setInterval(function () {
-        ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+        this.robot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
       }, 100)
       await this.sleep(500)
 
