@@ -24,6 +24,8 @@
 import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 
+var os = require('os')
+
 export default {
   name: 'landing-page',
   data () {
@@ -40,7 +42,7 @@ export default {
         },
         {
           ip: 'localhost',
-          platform: 'PC'
+          platform: os.platform()
         }
       ],
       webSocket: null
