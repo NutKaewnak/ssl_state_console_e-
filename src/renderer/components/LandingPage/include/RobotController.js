@@ -3,7 +3,8 @@ class Robot {
   constructor (name, ipAddress) {
     this._name = name
     this._ip = ipAddress
-    this.command = null
+    this._constrain = null
+    this._command = null
   }
 }
 

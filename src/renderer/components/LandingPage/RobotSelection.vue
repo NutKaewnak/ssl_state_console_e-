@@ -1,16 +1,20 @@
 <template>
-  <div class="container">
-    <div class="title">
-      Robot Information</div>
-    <div v-for="i in robots">
-      <div class="items">
-        <div class="item">
-          <div class="name">IP:</div><div class="value">{{i.ip}}</div>
+  <div>
+    <div class="title">Robot Information</div>
+    <div class="container">
+      <div v-for="i in robots">
+        <div class="items">
+          <div class="item">
+            <div class="name">{{i.name}}</div>
+          </div>
+          <div class="item">
+            <div class="name">IP:</div><div class="value">{{i.ip}}</div>
+          </div>
+          <div class="item">
+            <div class="name">Platform</div><div class="value">{{i.platform}}</div>
+          </div>
+          <div><button :class="{alt:!(robot === i.ip)}" @click="selectRobot(i.ip)">Select</button></div>
         </div>
-        <div class="item">
-          <div class="name">Platform</div><div class="value">{{i.platform}}</div>
-        </div>
-        <div><button :class="{alt:!(robot === i.ip)}" @click="selectRobot(i.ip)">Select</button></div>
       </div>
     </div>
   </div>
@@ -37,13 +41,17 @@
   }
 
   .container {
-    padding: 20px 10px 50px 10px;
+    padding: 0px 10px 50px 10px;
     margin-left: -10px;
     width: 200px;
+    height: 80vh;
     min-height: 400px;
+    overflow: scroll;
   }
 
-  .items { margin-top: 8px; }
+  .items { 
+    margin-top: 8px;
+  }
 
   .item {
     display: flex;

@@ -34,10 +34,27 @@ export default {
       robots: [
         {
           ip: '192.168.0.150',
+          name: 'Captain',
+          platform: 'SSL'
+        },
+        {
+          ip: '192.168.0.151',
+          name: 'Hulk',
           platform: 'SSL'
         },
         {
           ip: '192.168.0.153',
+          name: 'Ironman',
+          platform: 'SSL'
+        },
+        {
+          ip: '192.168.0.153',
+          name: 'Thor',
+          platform: 'SSL'
+        },
+        {
+          ip: '192.168.0.154',
+          name: 'Widow',
           platform: 'SSL'
         },
         {
