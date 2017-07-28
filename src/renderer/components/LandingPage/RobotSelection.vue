@@ -5,15 +5,15 @@
       <div v-for="i in robots">
         <div class="items">
           <div class="item">
-            <div class="name">{{i.name}}</div>
+            <div class="name">{{i._name}}</div>
           </div>
           <div class="item">
-            <div class="name">IP:</div><div class="value">{{i.ip}}</div>
+            <div class="name">IP:</div><div class="value">{{i._ip}}</div>
           </div>
           <div class="item">
-            <div class="name">Platform</div><div class="value">{{i.platform}}</div>
+            <div class="name">Platform</div><div class="value">{{i._platform}}</div>
           </div>
-          <div><button :class="{alt:!(robot === i.ip)}" @click="selectRobot(i.ip)">Select</button></div>
+          <div><button :class="{alt:!(currentRobot === i)}" @click="selectRobot(i)">Select</button></div>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
 
 <script>
   export default {
-    props: ['robot', 'robots'],
+    props: ['currentRobot', 'robots'],
     methods: {
       selectRobot (ip) {
         this.$emit('selectRobot', ip)

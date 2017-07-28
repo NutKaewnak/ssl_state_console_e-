@@ -4,7 +4,7 @@
     <main>
       <div class="left-side">
         <robot-selection
-        :robot='robot'
+        :currentRobot='currentRobot'
         :robots='robots'
         @selectRobot='selectRobot'
         ></robot-selection>
@@ -12,7 +12,7 @@
 
       <div class="right-side">
         <Console
-        :robot='robot'
+        :currentRobot='currentRobot'
         :webSocket='webSocket'
         ></Console>
       </div>
@@ -23,48 +23,14 @@
 <script>
 import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
-
-var Robot = require('./LandingPage/include/RobotController.js')
-
-var os = require('os')
+import Robot from './LandingPage/include/Robot.js'
 
 export default {
   name: 'landing-page',
   data () {
     return {
-      robot: null,
-      robots: [
-        {
-          ip: '192.168.0.150',
-          name: 'Captain',
-          platform: 'SSL v.1'
-        },
-        {
-          ip: '192.168.0.151',
-          name: 'Hulk',
-          platform: 'SSL v.2'
-        },
-        {
-          ip: '192.168.0.152',
-          name: 'Ironman',
-          platform: 'SSL v.2'
-        },
-        {
-          ip: '192.168.0.153',
-          name: 'Thor',
-          platform: 'SSL v.2'
-        },
-        {
-          ip: '192.168.0.154',
-          name: 'Widow',
-          platform: 'SSL v.2'
-        },
-        {
-          ip: 'localhost',
-          platform: os.platform()
-        }
-      ],
-      robotInstance: {},
+      currentRobot: null,
+      robots: [],
       webSocket: null
     }
   },
@@ -73,25 +39,21 @@ export default {
     Console
   },
   methods: {
-    selectRobot (ip) {
-      this.robot = ip
-      this.initWebSocket()
-    },
-    initWebSocket () {
-      this.webSocket = new WebSocket('ws://' + this.robot + ':8081')
-      console.log(this.webSocket.url)
+    selectRobot (robot) {
+      this.currentRobot = robot
+      console.log(this.currentRobot)
     },
     initRobot (_robot) {
-      this.robotInstance[_robot.ip] = new Robot(_robot.name, _robot.ip, _robot.platform)
+      this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform))
     }
   },
   mounted () {
-    for (var i = 0; i > this.robots.lenght; i++) {
-      this.initRobot(this.robots[i])
+    let vm = this
+    var robotList = require('./LandingPage/data/RobotData.json').robots
+    for (var i = 0; i < robotList.length; i++) {
+      vm.initRobot(robotList[i])
     }
-    for (i = 0; i > this.robots.lenght; i++) {
-      this.initRobot(this.robots[i])
-    }
+    console.log(this.robots)
   }
 }
 </script>
@@ -148,47 +110,5 @@ export default {
     display: flex;
     flex-direction: column;
     flex: 1 100%;
-  }
-
-  .welcome {
-    color: #555;
-    font-size: 23px;
-    margin-bottom: 10px;
-  }
-
-  .title {
-    color: #2c3e50;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
-
-  .title.alt {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  .doc p {
-    color: black;
-    margin-bottom: 10px;
-  }
-
-  .doc button {
-    font-size: .8em;
-    cursor: pointer;
-    outline: none;
-    padding: 0.75em 2em;
-    border-radius: 2em;
-    display: inline-block;
-    color: #fff;
-    background-color: #4fc08d;
-    transition: all 0.15s ease;
-    box-sizing: border-box;
-    border: 1px solid #4fc08d;
-  }
-
-  .doc button.alt {
-    color: #42b983;
-    background-color: transparent;
   }
 </style>
