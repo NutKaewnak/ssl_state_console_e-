@@ -13,7 +13,7 @@
           <div class="item">
             <div class="name">Platform</div><div class="value">{{i._platform}}</div>
           </div>
-          <div><button :class="{alt:(selectedRobot.indexOf(i) === -1)}" @click="selectRobot(i)">Select</button></div>
+          <div><button :class="{alt:(selectedRobots.indexOf(i) === -1)}" @click="selectRobot(i)">Select</button></div>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
 
 <script>
   export default {
-    props: ['currentRobot', 'selectedRobot', 'robots'],
+    props: ['currentRobot', 'selectedRobots', 'robots'],
     methods: {
       selectRobot (ip) {
         this.$emit('selectRobot', ip)

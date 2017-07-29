@@ -5,7 +5,7 @@
       <div class="left-side">
         <robot-selection
         :currentRobot='currentRobot'
-        :selectedRobot='selectedRobot'
+        :selectedRobots='selectedRobots'
         :robots='robots'
         @selectRobot='selectRobot'
         ></robot-selection>
@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       currentRobot: null,
-      selectedRobot: [],
+      selectedRobots: [],
       robots: []
     }
   },
@@ -44,12 +44,11 @@ export default {
   methods: {
     selectRobot (robot) {
       this.currentRobot = robot
-      if (this.selectedRobot.indexOf(robot) === -1) {
-        this.selectedRobot.push(robot)
+      if (this.selectedRobots.indexOf(robot) === -1) {
+        this.selectedRobots.push(robot)
       } else {
-        this.selectedRobot.splice(this.selectedRobot.indexOf(robot), 1)
+        this.selectedRobots.splice(this.selectedRobots.indexOf(robot), 1)
       }
-      console.log(this.selectedRobot.indexOf(robot))
     },
     initRobot (_robot) {
       this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform))
@@ -59,11 +58,34 @@ export default {
       var timeLimit = 5000
       while (new Date().getTime() - startTime < timeLimit) {
         // Timesharing
-        if ((new Date().getTime() - startTime) % 100 === 0) {
+        var now = new Date().getTime()
+        if ((now - startTime) % 100 === 0) {
           console.log('send!!')
         }
-        if ((new Date().getTime() - startTime) % 1000 === 100) {
-          this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+        if ((now - startTime) % 100 === 10) {
+          if (this.selectedRobots.indexOf(this.robots[5]) !== -1) {
+            this.robots[5]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+          }
+        } else if ((now - startTime) % 100 === 20) {
+          if (this.selectedRobots.indexOf(this.robots[0]) !== -1) {  // Captain
+            this.robots[0]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+          }
+        } else if ((now - startTime) % 100 === 40) {
+          if (this.selectedRobots.indexOf(this.robots[1]) !== -1) {  // Hulk
+            this.robots[1]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+          }
+        } else if ((now - startTime) % 100 === 60) {
+          if (this.selectedRobots.indexOf(this.robots[2]) !== -1) {  // Iron man
+            this.robots[2]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+          }
+        } else if ((now - startTime) % 100 === 80) {
+          if (this.selectedRobots.indexOf(this.robots[3]) !== -1) {  // Thor
+            this.robots[3]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+          }
+        } else if ((now - startTime) % 100 === 80) {
+          if (this.selectedRobots.indexOf(this.robots[4]) !== -1) {  // Black Widow
+            this.robots[4]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+          }
         }
       }
     }
@@ -71,10 +93,11 @@ export default {
   mounted () {
     let vm = this
     var robotList = require('./LandingPage/data/RobotData.json').robots
+
+    // Init robots
     for (var i = 0; i < robotList.length; i++) {
       vm.initRobot(robotList[i])
     }
-    console.log(this.robots)
   }
 }
 </script>
