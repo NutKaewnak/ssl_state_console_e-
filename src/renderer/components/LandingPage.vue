@@ -5,6 +5,7 @@
       <div class="left-side">
         <robot-selection
         :currentRobot='currentRobot'
+        :selectedRobot='selectedRobot'
         :robots='robots'
         @selectRobot='selectRobot'
         ></robot-selection>
@@ -32,6 +33,7 @@ export default {
   data () {
     return {
       currentRobot: null,
+      selectedRobot: [],
       robots: []
     }
   },
@@ -42,7 +44,12 @@ export default {
   methods: {
     selectRobot (robot) {
       this.currentRobot = robot
-      console.log(this.currentRobot)
+      if (this.selectedRobot.indexOf(robot) === -1) {
+        this.selectedRobot.push(robot)
+      } else {
+        this.selectedRobot.splice(this.selectedRobot.indexOf(robot), 1)
+      }
+      console.log(this.selectedRobot.indexOf(robot))
     },
     initRobot (_robot) {
       this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform))
