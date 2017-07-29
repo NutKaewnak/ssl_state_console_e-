@@ -51,6 +51,7 @@ export default {
       var startTime = new Date().getTime()
       var timeLimit = 5000
       while (new Date().getTime() - startTime < timeLimit) {
+        // Timesharing
         if ((new Date().getTime() - startTime) % 100 === 0) {
           console.log('send!!')
         }
