@@ -1,6 +1,6 @@
 {
   "name": "ssl_state_console_e-",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": "nutkaewnak <nut-boss@hotmail.com>",
   "description": "Console for SSL robot using electron",
   "license": "BSD",
@@ -58,6 +58,7 @@
     "axios": "^0.16.1",
     "bootstrap": "^3.3.7",
     "bulma": "^0.4.3",
+    "fs": "^0.0.1-security",
     "jsplumb": "^2.4.3",
     "path": "^0.12.7",
     "socket-io": "^1.0.0",

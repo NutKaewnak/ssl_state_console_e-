@@ -14,7 +14,7 @@
       <div class="right-side">
         <Console
         :currentRobot='currentRobot'
-        @sendCommand='sendCommand'
+        @buildAndRun='buildAndRun'
         ></Console>
       </div>
     </main>
@@ -52,6 +52,13 @@ export default {
     },
     initRobot (_robot) {
       this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform))
+    },
+    async buildAndRun () {
+      this.buildRobotsCommand()
+      this.sendCommand()
+    },
+    // TODO: Implement this
+    buildRobotsCommand () {
     },
     async sendCommand () {
       var startTime = new Date().getTime()

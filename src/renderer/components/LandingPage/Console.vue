@@ -32,14 +32,13 @@
         </a><br/>
       </div>
       <br/>
-      <a v-on:click="sendCommand()" class="button is-danger">BUILD AND RUN</a>
+      <a v-on:click="buildAndRun()" class="button is-danger">BUILD AND RUN</a>
     </div>
   </div>
 </template>
 
 <script>
-const jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
-// const omniDirectionVelTransform = require('./include/omniDirectionVelTransform.js')
+const jsPlumb = require('jsplumb/dist/js/jsplumb.js').jsPlumb
 
 var instance = null
 
@@ -47,7 +46,7 @@ function initNode (el) {
   if (!instance) {
     return
   }
-  // initialise draggable elements.
+  // initialize draggable elements.
   instance.draggable(el)
 
   instance.makeSource(el, {
@@ -104,8 +103,9 @@ export default {
       initNode(d)
       return d
     },
-    async sendCommand () {
-      this.$emit('sendCommand')
+    buildAndRun () {
+      console.log(instance)
+      this.$emit('buildAndRun')
     }
   },
   mounted () {
