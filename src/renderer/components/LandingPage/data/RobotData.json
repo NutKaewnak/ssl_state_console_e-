@@ -24,6 +24,11 @@
       "ip": "192.168.0.154",
       "name": "Widow",
       "platform": "SSL v.2"
+    },
+    {
+      "ip": "localhost",
+      "name": "PC",
+      "platform": "PC"
     }
   ]
 }

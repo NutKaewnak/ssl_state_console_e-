@@ -13,7 +13,7 @@
       <div class="right-side">
         <Console
         :currentRobot='currentRobot'
-        :webSocket='webSocket'
+        @sendCommand='sendCommand'
         ></Console>
       </div>
     </main>
@@ -25,13 +25,14 @@ import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 import Robot from './LandingPage/include/Robot.js'
 
+const omniDirectionVelTransform = require('./LandingPage/include/omniDirectionVelTransform.js')
+
 export default {
   name: 'landing-page',
   data () {
     return {
       currentRobot: null,
-      robots: [],
-      webSocket: null
+      robots: []
     }
   },
   components: {
@@ -45,6 +46,18 @@ export default {
     },
     initRobot (_robot) {
       this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform))
+    },
+    async sendCommand () {
+      var startTime = new Date().getTime()
+      var timeLimit = 5000
+      while (new Date().getTime() - startTime < timeLimit) {
+        if ((new Date().getTime() - startTime) % 100 === 0) {
+          console.log('send!!')
+        }
+        if ((new Date().getTime() - startTime) % 1000 === 100) {
+          this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+        }
+      }
     }
   },
   mounted () {

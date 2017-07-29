@@ -39,7 +39,7 @@
 
 <script>
 const jsPlumb = require('../../../../node_modules/jsplumb/dist/js/jsplumb.js').jsPlumb
-const omniDirectionVelTransform = require('./include/omniDirectionVelTransform.js')
+// const omniDirectionVelTransform = require('./include/omniDirectionVelTransform.js')
 
 var instance = null
 
@@ -105,93 +105,94 @@ export default {
       return d
     },
     async sendCommand () {
-      var command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
-      }, 100)
-      await this.sleep(5000)
+    //   var command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+    //   }, 100)
+    //   await this.sleep(5000)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 100)
-      await this.sleep(500)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+    //   }, 100)
+    //   await this.sleep(500)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
-      }, 100)
-      await this.sleep(1555)  // 90
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+    //   }, 100)
+    //   await this.sleep(1555)  // 90
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 100)
-      await this.sleep(500)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+    //   }, 100)
+    //   await this.sleep(500)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
-      }, 100)
-      await this.sleep(5000)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+    //   }, 100)
+    //   await this.sleep(5000)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 100)
-      await this.sleep(500)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+    //   }, 100)
+    //   await this.sleep(500)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
-      }, 100)
-      await this.sleep(1555)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+    //   }, 100)
+    //   await this.sleep(1555)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 100)
-      await this.sleep(500)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+    //   }, 100)
+    //   await this.sleep(500)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
-      }, 100)
-      await this.sleep(5000)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+    //   }, 100)
+    //   await this.sleep(5000)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 100)
-      await this.sleep(500)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+    //   }, 100)
+    //   await this.sleep(500)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
-      }, 100)
-      await this.sleep(1555)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0.5)}))
+    //   }, 100)
+    //   await this.sleep(1555)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 100)
-      await this.sleep(500)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+    //   }, 100)
+    //   await this.sleep(500)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
-      }, 100)
-      await this.sleep(5000)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+    //   }, 100)
+    //   await this.sleep(5000)
 
-      clearInterval(command)
-      command = setInterval(function () {
-        this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
-      }, 100)
-      await this.sleep(500)
+    //   clearInterval(command)
+    //   command = setInterval(function () {
+    //     this.currentRobot._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 0, 0)}))
+    //   }, 100)
+    //   await this.sleep(500)
 
-      clearInterval(command)
-    },
-    sleep (ms) {
-      return new Promise(resolve => setTimeout(resolve, ms))
+    //   clearInterval(command)
+    // },
+    // sleep (ms) {
+    //   return new Promise(resolve => setTimeout(resolve, ms))
+      this.$emit('sendCommand')
     }
   },
   mounted () {
@@ -343,7 +344,6 @@ export default {
 #phone1 {
   left: 35em;
   top: 12em;
-  width: 7em;
 }
 
 #inperson {
