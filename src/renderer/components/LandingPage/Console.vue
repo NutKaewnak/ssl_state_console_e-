@@ -155,7 +155,7 @@ export default {
         type: 'basic'
       })
 
-      jsPlumb.fire('jsPlumbDemoLoaded', instance)
+      jsPlumb.fire('kuykuy', instance)
     })
   }
 }

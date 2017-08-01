@@ -87,4 +87,4 @@ const omniDirectionVelTransform = function (x, y, w) {
   return convert3Digit(Math.floor(speedWheel1)) + convert3Digit(Math.floor(speedWheel2)) + convert3Digit(Math.floor(speedWheel3)) + convert3Digit(Math.floor(speedWheel4))
 }
 
-module.exports = omniDirectionVelTransform
+export default omniDirectionVelTransform
