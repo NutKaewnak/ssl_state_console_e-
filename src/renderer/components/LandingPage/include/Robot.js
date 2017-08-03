@@ -9,10 +9,12 @@ class Robot {
     this._constrain = null
     this._command = null
     this._ws = null
-    this.initWebSocket()
   }
   initWebSocket () {
     this._ws = new WebSocket('ws://' + this._ip + ':8081')
+  }
+  sendCommand (command) {
+    this._ws.send(command)
   }
 }
 export default Robot
