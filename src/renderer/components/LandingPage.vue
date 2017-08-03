@@ -26,7 +26,8 @@ import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 import Robot from './LandingPage/include/Robot.js'
 
-const omniDirectionVelTransform = require('./LandingPage/include/omniDirectionVelTransform.js')
+import Point2d from './LandingPage/include/model/Point2d.js'
+import omniDirectionVelTransform from './LandingPage/include/omniDirectionVelTransform.js'
 
 export default {
   name: 'landing-page',
@@ -60,9 +61,29 @@ export default {
     // TODO: Implement this
     buildRobotsCommand () {
     },
+
     async sendCommand () {
       var startTime = new Date().getTime()
       var timeLimit = 5000
+
+      var BIAS = {
+        'X1': 0,
+        'Y1': 0,
+        'X2': 0,
+        'Y2': 0,
+        'X3': 0,
+        'Y3': 0,
+        'X4': 0,
+        'Y4': 0,
+        'W1': 0,
+        'W2': 0,
+        'W3': 0,
+        'W4': 0
+      }
+
+      var data = omniDirectionVelTransform(new Point2d(0, 1, 0), BIAS)
+      let cal = (val) => (val - 128) / 127
+      console.log(cal(data._wheel4), cal(data._wheel1), cal(data._wheel2), cal(data._wheel3))
       while (new Date().getTime() - startTime < timeLimit) {
         // Timesharing
         var now = new Date().getTime()
@@ -71,30 +92,31 @@ export default {
         }
         if ((now - startTime) % 100 === 10) {
           if (this.selectedRobots.indexOf(this.robots[5]) !== -1) {
-            this.robots[5]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+            this.robots[5]._ws.send(JSON.stringify({}))
           }
         } else if ((now - startTime) % 100 === 20) {
           if (this.selectedRobots.indexOf(this.robots[0]) !== -1) {  // Captain
-            this.robots[0]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+            this.robots[0]._ws.send(JSON.stringify({}))
           }
         } else if ((now - startTime) % 100 === 40) {
           if (this.selectedRobots.indexOf(this.robots[1]) !== -1) {  // Hulk
-            this.robots[1]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+            this.robots[1]._ws.send(JSON.stringify({}))
           }
         } else if ((now - startTime) % 100 === 60) {
           if (this.selectedRobots.indexOf(this.robots[2]) !== -1) {  // Iron man
-            this.robots[2]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+            this.robots[2]._ws.send(JSON.stringify({}))
           }
         } else if ((now - startTime) % 100 === 80) {
           if (this.selectedRobots.indexOf(this.robots[3]) !== -1) {  // Thor
-            this.robots[3]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+            this.robots[3]._ws.send(JSON.stringify({}))
           }
         } else if ((now - startTime) % 100 === 80) {
           if (this.selectedRobots.indexOf(this.robots[4]) !== -1) {  // Black Widow
-            this.robots[4]._ws.send(JSON.stringify({id: '02', type: 3, data: omniDirectionVelTransform(0, 1, 0)}))
+            this.robots[4]._ws.send(JSON.stringify({}))
           }
         }
       }
+      // END WHILE
     }
   },
   mounted () {

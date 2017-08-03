@@ -1,51 +1,64 @@
 'use strict'
 
-var BIAS_X1 = 0
-var BIAS_Y1 = 0
-var BIAS_X2 = 0.1
-var BIAS_Y2 = 0
-var BIAS_X3 = 0
-var BIAS_Y3 = 0
-var BIAS_X4 = 0.125
-var BIAS_Y4 = 0
-var BIAS_W1 = 0
-var BIAS_W2 = 0.05
-var BIAS_W3 = 0
-var BIAS_W4 = 0
+import Point2d from './model/Point2d.js'
+import RobotVel from './model/RobotVel.js'
 
-var GAIN_X_WHEEL1 = (0.361454 + BIAS_X1)
-var GAIN_Y_WHEEL1 = (0.272298 + BIAS_Y1)
-var GAIN_W_WHEEL1 = (0.196848 + BIAS_W1)
-// var GAIN_W_WHEEL1  0.196848 * 2
+/**
+ * @param {Point2d} point2d
+ */
+function omniDirectionVelTransform (point2d, BIAS) {
+  if (!(point2d instanceof Point2d)) {
+    return
+  }
 
-var GAIN_X_WHEEL2 = (-0.361454 + BIAS_X2)
-var GAIN_Y_WHEEL2 = (0.419347 + BIAS_Y2)
-var GAIN_W_WHEEL2 = (0.303152 + BIAS_W2)
-// var GAIN_W_WHEEL2  0.303152 * 2
+  console.log(BIAS)
 
-var GAIN_X_WHEEL3 = (-0.361454 + BIAS_X3)
-var GAIN_Y_WHEEL3 = (-0.419347 + BIAS_Y3)
-var GAIN_W_WHEEL3 = (0.303152 + BIAS_W3)
-// var GAIN_W_WHEEL3  0.303152 * 2
+  if (!BIAS) {
+    console.log('kuy')
+    BIAS = {
+      'X1': 0,
+      'Y1': 0,
+      'X2': 0.1,
+      'Y2': 0,
+      'X3': 0,
+      'Y3': 0,
+      'X4': 0.125,
+      'Y4': 0,
+      'W1': 0,
+      'W2': 0.05,
+      'W3': 0,
+      'W4': 0
+    }
+  }
 
-var GAIN_X_WHEEL4 = (0.361454 + BIAS_X4)
-var GAIN_Y_WHEEL4 = (-0.272298 + BIAS_Y4)
-var GAIN_W_WHEEL4 = (0.196848 + BIAS_W4)
-
-function convert3Digit (str) {
-  return String('000' + str).slice(-3)
-}
-
-const omniDirectionVelTransform = function (x, y, w) {
   var speedWheel1
   var speedWheel2
   var speedWheel3
   var speedWheel4
 
-  var wheel1 = (GAIN_X_WHEEL1 * x) + (GAIN_Y_WHEEL1 * y) + (GAIN_W_WHEEL1 * w)
-  var wheel2 = (GAIN_X_WHEEL2 * x) + (GAIN_Y_WHEEL2 * y) + (GAIN_W_WHEEL2 * w)
-  var wheel3 = (GAIN_X_WHEEL3 * x) + (GAIN_Y_WHEEL3 * y) + (GAIN_W_WHEEL3 * w)
-  var wheel4 = (GAIN_X_WHEEL4 * x) + (GAIN_Y_WHEEL4 * y) + (GAIN_W_WHEEL4 * w)
+  var GAIN_X_WHEEL1 = (0.361454 + BIAS.X1)
+  var GAIN_Y_WHEEL1 = (0.272298 + BIAS.Y1)
+  var GAIN_W_WHEEL1 = (0.196848 + BIAS.W1)
+  // var GAIN_W_WHEEL1  0.196848 * 2
+
+  var GAIN_X_WHEEL2 = (-0.361454 + BIAS.X2)
+  var GAIN_Y_WHEEL2 = (0.419347 + BIAS.Y2)
+  var GAIN_W_WHEEL2 = (0.303152 + BIAS.W2)
+  // var GAIN_W_WHEEL2  0.303152 * 2
+
+  var GAIN_X_WHEEL3 = (-0.361454 + BIAS.X3)
+  var GAIN_Y_WHEEL3 = (-0.419347 + BIAS.Y3)
+  var GAIN_W_WHEEL3 = (0.303152 + BIAS.W3)
+  // var GAIN_W_WHEEL3  0.303152 * 2
+
+  var GAIN_X_WHEEL4 = (0.361454 + BIAS.X4)
+  var GAIN_Y_WHEEL4 = (-0.272298 + BIAS.Y4)
+  var GAIN_W_WHEEL4 = (0.196848 + BIAS.W4)
+
+  var wheel1 = (GAIN_X_WHEEL1 * point2d._x) + (GAIN_Y_WHEEL1 * point2d._y) + (GAIN_W_WHEEL1 * point2d._w)
+  var wheel2 = (GAIN_X_WHEEL2 * point2d._x) + (GAIN_Y_WHEEL2 * point2d._y) + (GAIN_W_WHEEL2 * point2d._w)
+  var wheel3 = (GAIN_X_WHEEL3 * point2d._x) + (GAIN_Y_WHEEL3 * point2d._y) + (GAIN_W_WHEEL3 * point2d._w)
+  var wheel4 = (GAIN_X_WHEEL4 * point2d._x) + (GAIN_Y_WHEEL4 * point2d._y) + (GAIN_W_WHEEL4 * point2d._w)
 
   wheel1 = wheel1 / 0.8306  // mapping to max value(1)
   wheel2 = wheel2 / 0.8306
@@ -84,7 +97,7 @@ const omniDirectionVelTransform = function (x, y, w) {
     speedWheel4 = wheel4 * 127 + 128
   }
 
-  return convert3Digit(Math.floor(speedWheel1)) + convert3Digit(Math.floor(speedWheel2)) + convert3Digit(Math.floor(speedWheel3)) + convert3Digit(Math.floor(speedWheel4))
+  return new RobotVel(speedWheel1, speedWheel2, speedWheel3, speedWheel4)
 }
 
 export default omniDirectionVelTransform
