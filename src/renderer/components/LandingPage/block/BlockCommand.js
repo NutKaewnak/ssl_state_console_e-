@@ -1,14 +1,16 @@
 'use strict'
 
 class BlockCommand {
-  constructor (posX, posY) {
+  constructor (posLeft, posTop) {
     var now = new Date().getTime()
     this._id = `BlockCommand_${now}`
-    this._posX = posX
-    this._posY = posY
+    this._posLeft = posLeft
+    this._posTop = posTop
   }
+
   execute () {
   }
+
   toString () {
     return `${this._id}: ${this._posX}, ${this._posY}`
   }

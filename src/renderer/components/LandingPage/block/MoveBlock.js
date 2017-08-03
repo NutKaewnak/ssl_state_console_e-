@@ -3,8 +3,8 @@
 import BlockCommand from './BlockCommand.js'
 
 class MoveBlock extends BlockCommand {
-  constructor (posX, posY, point2d, time) {
-    super(posX, posY)
+  constructor (posLeft, posTop, point2d, time) {
+    super(posLeft, posTop)
     this._id = `MoveBlock_${new Date().getTime()}`
     this._point = point2d
     this._time = time

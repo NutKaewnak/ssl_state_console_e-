@@ -62,10 +62,11 @@ export default {
 
     async sendCommand () {
       var startTime = new Date().getTime()
-      var timeLimit = 5000
+      var timeLimit = 1000
 
       while (new Date().getTime() - startTime < timeLimit) {
         // Timesharing
+        this.sleep(10)
         var now = new Date().getTime()
         if ((now - startTime) % 100 === 0) {
           console.log('sending data...')
@@ -76,6 +77,7 @@ export default {
     timeSlotChecker (deltaTime) {
       if ((deltaTime) % 100 === 10) {
         if (this.selectedRobots.indexOf(this.robots[5]) !== -1) {
+          console.log(deltaTime)
           this.robots[5].sendCommand(JSON.stringify({}))
         }
       } else if ((deltaTime) % 100 === 20) {
@@ -99,6 +101,9 @@ export default {
           this.robots[4].sendCommand(JSON.stringify({}))
         }
       }
+    },
+    sleep (ms) {
+      return new Promise(resolve => setTimeout(resolve, ms))
     }
   },
   mounted () {
