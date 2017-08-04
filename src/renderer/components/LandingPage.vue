@@ -49,6 +49,9 @@ export default {
         this.selectedRobots.splice(this.selectedRobots.indexOf(robot), 1)
       }
     },
+    isSelected (robot) {
+      return this.selectedRobots.indexOf(robot) !== -1
+    },
     initRobot (_robot) {
       this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform))
     },
@@ -75,31 +78,38 @@ export default {
       }
     },
     timeSlotChecker (deltaTime) {
-      if ((deltaTime) % 100 === 10) {
-        if (this.selectedRobots.indexOf(this.robots[5]) !== -1) {
-          console.log(deltaTime)
-          this.robots[5].sendCommand(JSON.stringify({}))
-        }
-      } else if ((deltaTime) % 100 === 20) {
-        if (this.selectedRobots.indexOf(this.robots[0]) !== -1) {  // Captain
-          this.robots[0].sendCommand(JSON.stringify({}))
-        }
-      } else if ((deltaTime) % 100 === 40) {
-        if (this.selectedRobots.indexOf(this.robots[1]) !== -1) {  // Hulk
-          this.robots[1].sendCommand(JSON.stringify({}))
-        }
-      } else if ((deltaTime) % 100 === 60) {
-        if (this.selectedRobots.indexOf(this.robots[2]) !== -1) {  // Iron man
-          this.robots[2].sendCommand(JSON.stringify({}))
-        }
-      } else if ((deltaTime) % 100 === 80) {
-        if (this.selectedRobots.indexOf(this.robots[3]) !== -1) {  // Thor
-          this.robots[3].sendCommand(JSON.stringify({}))
-        }
-      } else if ((deltaTime) % 100 === 80) {
-        if (this.selectedRobots.indexOf(this.robots[4]) !== -1) {  // Black Widow
-          this.robots[4].sendCommand(JSON.stringify({}))
-        }
+      switch ((deltaTime) % 100) {
+        case 10:
+          if (this.isSelected(this.robots[5])) {
+            console.log(deltaTime)
+            this.robots[5].sendCommand(JSON.stringify({}))
+          }
+          break
+        case 20:
+          if (this.isSelected(this.robots[0])) {  // Captain
+            this.robots[0].sendCommand(JSON.stringify({}))
+          }
+          break
+        case 40:
+          if (this.isSelected(this.robots[1])) {  // Hulk
+            this.robots[1].sendCommand(JSON.stringify({}))
+          }
+          break
+        case 60:
+          if (this.isSelected(this.robots[2])) {  // Iron man
+            this.robots[2].sendCommand(JSON.stringify({}))
+          }
+          break
+        case 80:
+          if (this.isSelected(this.robots[3])) {  // Iron man
+            this.robots[3].sendCommand(JSON.stringify({}))
+          }
+          break
+        case 0:
+          if (this.isSelected(this.robots[4])) {  // Black Widow
+            this.robots[4].sendCommand(JSON.stringify({}))
+          }
+          break
       }
     },
     sleep (ms) {

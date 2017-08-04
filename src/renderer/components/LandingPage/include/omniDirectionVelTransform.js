@@ -11,10 +11,7 @@ function omniDirectionVelTransform (point2d, BIAS) {
     return
   }
 
-  console.log(BIAS)
-
   if (!BIAS) {
-    console.log('kuy')
     BIAS = {
       'X1': 0,
       'Y1': 0,

@@ -38,42 +38,10 @@
 </template>
 
 <script>
+import BlockCommand from './block/BlockCommand.js'
 const jsPlumb = require('jsplumb/dist/js/jsplumb.js').jsPlumb
 
 var instance = null
-
-function initNode (el) {
-  if (!instance) {
-    return
-  }
-  // initialize draggable elements.
-  instance.draggable(el)
-
-  instance.makeSource(el, {
-    filter: '.ep',
-    anchor: 'Continuous',
-    connectorStyle: { stroke: '#5c96bc', strokeWidth: 2, outlineStroke: 'transparent', outlineWidth: 4 },
-    connectionType: 'basic',
-    extract: {
-      'action': 'the-action'
-    },
-    maxConnections: 5,
-    onMaxConnections: function (info, e) {
-      alert('Maximum connections (' + info.maxConnections + ') reached')
-    }
-  })
-
-  instance.makeTarget(el, {
-    dropOptions: { hoverClass: 'dragHover' },
-    anchor: 'Continuous',
-    allowLoopback: true
-  })
-
-  // this is not part of the core demo functionality; it is a means for the Toolkit edition's wrapped
-  // version of this demo to find out about new nodes being added.
-  //
-  instance.fire('jsPlumbDemoNodeAdded', el)
-}
 
 export default {
   props: ['currentRobot', 'robots', 'webSocket'],
@@ -90,6 +58,39 @@ export default {
         y: e.clientY
       }
     },
+    initNode (node) {
+      if (!instance) {
+        return
+      }
+      // initialize draggable elements.
+
+      instance.draggable(node)
+
+      instance.makeSource(node, {
+        filter: '.ep',
+        anchor: 'Continuous',
+        connectorStyle: { stroke: '#5c96bc', strokeWidth: 2, outlineStroke: 'transparent', outlineWidth: 4 },
+        connectionType: 'basic',
+        extract: {
+          'action': 'the-action'
+        },
+        maxConnections: 5,
+        onMaxConnections: function (info, e) {
+          alert('Maximum connections (' + info.maxConnections + ') reached')
+        }
+      })
+
+      instance.makeTarget(node, {
+        dropOptions: { hoverClass: 'dragHover' },
+        anchor: 'Continuous',
+        allowLoopback: true
+      })
+
+      // this is not part of the core demo functionality; it is a means for the Toolkit edition's wrapped
+      // version of this demo to find out about new nodes being added.
+      //
+      instance.fire('jsPlumbDemoNodeAdded', node)
+    },
     newNode (x, y) {
       // Fix by 3th
       var d = document.createElement('div')
@@ -100,15 +101,27 @@ export default {
       d.style.left = x + 'px'
       d.style.top = y + 'px'
       instance.getContainer().appendChild(d)
-      initNode(d)
+      this.initNode(d)
       return d
     },
     buildAndRun () {
       console.log(instance)
       this.$emit('buildAndRun')
+    },
+    initConnection (windows) {
+      for (var i = 0; i < windows.length; i++) {
+        this.initNode(windows[i], true)
+      }
+
+      instance.connect({ source: 'opened', target: 'phone1', type: 'basic' })
+      instance.connect({ source: 'phone1', target: 'rotate', type: 'basic' })
+      instance.connect({ source: 'rotate', target: 'inperson', type: 'basic' })
     }
   },
   mounted () {
+    let vm = this
+
+    console.log(new BlockCommand(0, 0))
     jsPlumb.ready(function () {
       instance = jsPlumb.getInstance({
         endpoint: ['Dot', {radius: 2}],
@@ -133,21 +146,11 @@ export default {
         info.connection.getOverlay('label').setLabel(info.connection.id)
       })
 
-      var windows = jsPlumb.getSelector('.statemachine-demo .w')
-
       instance.bind('click', function (c) {
         instance.deleteConnection(c)
       })
 
-      instance.batch(function () {
-        for (var i = 0; i < windows.length; i++) {
-          initNode(windows[i], true)
-        }
-
-        instance.connect({ source: 'opened', target: 'phone1', type: 'basic' })
-        instance.connect({ source: 'phone1', target: 'rotate', type: 'basic' })
-        instance.connect({ source: 'rotate', target: 'inperson', type: 'basic' })
-      })
+      vm.initConnection(jsPlumb.getSelector('.statemachine-demo .w'))
 
       instance.connect({
         source: 'inperson',
