@@ -7,7 +7,8 @@ class BlockCommand {
    */
   constructor (posLeft, posTop) {
     var now = new Date().getTime()
-    this._id = `BlockCommand_${now}`
+    this._type = 'BlockCommand'
+    this._id = `${this._type}_${now}`
     this._posLeft = posLeft
     this._posTop = posTop
   }

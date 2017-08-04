@@ -26,6 +26,9 @@ import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 import Robot from './LandingPage/include/Robot.js'
 
+const path = require('path')
+let dataPath = path.normalize('LandingPage/data/')
+
 export default {
   name: 'landing-page',
   data () {
@@ -53,8 +56,9 @@ export default {
       return this.selectedRobots.indexOf(robot) !== -1
     },
     initRobot (_robot) {
-      this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform))
+      this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform, _robot.path))
     },
+
     async buildAndRun () {
       this.buildRobotsCommand()
       this.sendCommand()
@@ -118,12 +122,14 @@ export default {
   },
   mounted () {
     let vm = this
-    var robotList = require('./LandingPage/data/RobotData.json').robots
+    var paths = path.join(dataPath, 'RobotData.json')
+    var robotList = require(`./${paths}`).robots
 
     // Init robots
     for (var i = 0; i < robotList.length; i++) {
       vm.initRobot(robotList[i])
     }
+    vm.robots[5].loadCommand(require(`./${dataPath}${vm.robots[5]._saveFile}`))
   }
 }
 </script>

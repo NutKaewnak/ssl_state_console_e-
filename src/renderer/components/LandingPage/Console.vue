@@ -6,6 +6,16 @@
     id="diagramContainer" 
     v-on:dblclick="newNode(cursorPos.x, cursorPos.y)"
     class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan column is-6">
+
+      <div v-if="ready">
+        <div v-for="cmd in currentRobot._command">
+          <div class="w" :id="cmd._id">{{cmd._type}}
+            <div class="ep" :action="cmd._id"></div>
+          </div>
+        </div>
+      </div>
+
+      <!--
       <div class="w" id="opened">BEGIN
         <div class="ep" action="begin"></div>
       </div>
@@ -21,7 +31,9 @@
       <div class="w" id="kick">KICK
         <div class="ep" action="kick"></div>
       </div>
+      -->
     </div>
+
     <div class="column box">
       <div class="block">
         <a class="button is-info is-outlined" id="move-btn">MOVE
@@ -38,7 +50,6 @@
 </template>
 
 <script>
-import BlockCommand from './block/BlockCommand.js'
 const jsPlumb = require('jsplumb/dist/js/jsplumb.js').jsPlumb
 
 var instance = null
@@ -49,6 +60,11 @@ export default {
     return {
       cursorPos: {},
       instance: null
+    }
+  },
+  computed: {
+    ready: function () {
+      return this.currentRobot !== null
     }
   },
   methods: {
@@ -108,9 +124,9 @@ export default {
       console.log(instance)
       this.$emit('buildAndRun')
     },
-    initConnection (windows) {
-      for (var i = 0; i < windows.length; i++) {
-        this.initNode(windows[i], true)
+    initConnection (arr) {
+      for (var i = 0; i < arr.length; i++) {
+        this.initNode(arr[i], true)
       }
 
       instance.connect({ source: 'opened', target: 'phone1', type: 'basic' })
@@ -121,7 +137,6 @@ export default {
   mounted () {
     let vm = this
 
-    console.log(new BlockCommand(0, 0))
     jsPlumb.ready(function () {
       instance = jsPlumb.getInstance({
         endpoint: ['Dot', {radius: 2}],
@@ -171,7 +186,7 @@ export default {
   height: 70vh; 
   width: 50vw;
   position: relative;
-  background-color: #ffefee
+  background-color: #eee
 }
       
 .item {
@@ -250,31 +265,6 @@ export default {
 
 .statemachine-demo .jtk-endpoint {
   z-index: 3;
-}
-
-#opened {
-  left: 10em;
-  top: 5em;
-}
-
-#phone1 {
-  left: 35em;
-  top: 12em;
-}
-
-#inperson {
-  left: 12em;
-  top: 23em;
-}
-
-#rotate {
-  left: 28em;
-  top: 24em;
-}
-
-#kick {
-  left: 10em;
-  top: 35em;
 }
 
 .dragHover {

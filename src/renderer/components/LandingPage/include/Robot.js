@@ -1,4 +1,6 @@
 'use strict'
+
+import blockFactory from '../block/blockFactory.js'
 const WebSocket = require('ws')
 
 class Robot {
@@ -14,16 +16,16 @@ class Robot {
     this._platform = platform
     this._saveFile = saveFile
     this._constrain = null
-    this._command = null
+    this._command = {}
     this._ws = null
   }
   initWebSocket () {
     this._ws = new WebSocket('ws://' + this._ip + ':8081')
   }
-  loadCommand (saveFile) {
-    var commands = require(saveFile)
-    for (var cmd in commands) {
-      console.log(cmd)
+  loadCommand (arr) {
+    for (var cmd in arr) {
+      var command = blockFactory(arr[cmd])
+      this._command[command._id] = command
     }
   }
   sendCommand (command) {

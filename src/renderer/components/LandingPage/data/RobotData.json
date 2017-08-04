@@ -29,7 +29,7 @@
       "ip": "localhost",
       "name": "PC",
       "platform": "PC",
-      "command": {"nodes":[{"blockId":"startpoint","nodetype":"startpoint","positionX":273,"positionY":8},{"blockId":"endpoint","nodetype":"endpoint","positionX":310,"positionY":385},{"blockId":"taskcontainer1","nodetype":"task","positionX":381,"positionY":208},{"blockId":"decisioncontainer2","nodetype":"decision","positionX":261,"positionY":103}],"connections":[{"connectionId":"con_18","pageSourceId":"decisioncontainer2","pageTargetId":"taskcontainer1"},{"connectionId":"con_25","pageSourceId":"taskcontainer1","pageTargetId":"endpoint"},{"connectionId":"con_32","pageSourceId":"decisioncontainer2","pageTargetId":"endpoint"},{"connectionId":"con_46","pageSourceId":"startpoint","pageTargetId":"decisioncontainer2"}],"numberOfElements":2}
+      "path": "localhost_block.json"
     }
   ]
 }
