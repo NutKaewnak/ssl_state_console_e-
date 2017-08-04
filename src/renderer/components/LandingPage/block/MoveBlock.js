@@ -3,6 +3,12 @@
 import BlockCommand from './BlockCommand.js'
 
 class MoveBlock extends BlockCommand {
+  /**
+   * @param {Number} posLeft
+   * @param {Number} posTop
+   * @param {Point2d} point2d
+   * @param {Number} time
+   */
   constructor (posLeft, posTop, point2d, time) {
     super(posLeft, posTop)
     this._id = `MoveBlock_${new Date().getTime()}`
@@ -12,10 +18,6 @@ class MoveBlock extends BlockCommand {
 
   execute (robot) {
     robot.sendCommand(this._point)
-  }
-
-  toString () {
-    return `${super.toString()}, pos: ${this._point}(cm),  time: ${this._time}(s)`
   }
 }
 export default MoveBlock

@@ -1,6 +1,10 @@
 'use strict'
 
 class BlockCommand {
+  /**
+   * @param {Number} posLeft
+   * @param {Number} posTop
+   */
   constructor (posLeft, posTop) {
     var now = new Date().getTime()
     this._id = `BlockCommand_${now}`
@@ -9,10 +13,6 @@ class BlockCommand {
   }
 
   execute () {
-  }
-
-  toString () {
-    return `${this._id}: ${this._posX}, ${this._posY}`
   }
 }
 export default BlockCommand
