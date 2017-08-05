@@ -23,7 +23,8 @@
     {
       "ip": "192.168.0.154",
       "name": "Widow",
-      "platform": "SSL v.2"
+      "platform": "SSL v.2",
+      "path": "widow_block.json"
     },
     {
       "ip": "localhost",

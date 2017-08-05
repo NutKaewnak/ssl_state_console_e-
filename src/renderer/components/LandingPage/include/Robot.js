@@ -22,6 +22,9 @@ class Robot {
   initWebSocket () {
     this._ws = new WebSocket('ws://' + this._ip + ':8081')
   }
+  initGraph () {
+
+  }
   loadCommand (arr) {
     for (var cmd in arr) {
       var command = blockFactory(arr[cmd])

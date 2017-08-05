@@ -129,6 +129,7 @@ export default {
     for (var i = 0; i < robotList.length; i++) {
       vm.initRobot(robotList[i])
     }
+    vm.robots[4].loadCommand(require(`./${dataPath}${vm.robots[5]._saveFile}`))
     vm.robots[5].loadCommand(require(`./${dataPath}${vm.robots[5]._saveFile}`))
   }
 }

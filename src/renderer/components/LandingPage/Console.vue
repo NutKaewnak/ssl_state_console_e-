@@ -9,29 +9,11 @@
 
       <div v-if="ready">
         <div v-for="cmd in currentRobot._command">
-          <div class="w" :id="cmd._id">{{cmd._type}}
-            <div class="ep" :action="cmd._id"></div>
+          <div class="w" :id="cmd._id" :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">{{cmd._type}}
+            <div class="ep" :action="cmd._type"></div>
           </div>
         </div>
       </div>
-
-      <!--
-      <div class="w" id="opened">BEGIN
-        <div class="ep" action="begin"></div>
-      </div>
-      <div class="w" id="phone1">MOVE 1, 0
-        <div class="ep" action="move"></div>
-      </div>
-      <div class="w" id="rotate">ROTATE 90
-        <div class="ep" action="rotate"></div>
-      </div>
-      <div class="w" id="inperson">MOVE 1, 0
-        <div class="ep" action="move"></div>
-      </div>
-      <div class="w" id="kick">KICK
-        <div class="ep" action="kick"></div>
-      </div>
-      -->
     </div>
 
     <div class="column box">
@@ -67,6 +49,21 @@ export default {
       return this.currentRobot !== null
     }
   },
+  watch: {
+    currentRobot: function () {
+      let vm = this
+      if (vm.ready) {
+        jsPlumb.setSuspendDrawing(true)
+        for (var i in vm.currentRobot._command) {
+          vm.$nextTick(function () {
+            var newNode = document.getElementById(`${vm.currentRobot._command[i]._id}`)
+            vm.initNode(newNode)
+          })
+        }
+        jsPlumb.setSuspendDrawing(false, true)
+      }
+    }
+  },
   methods: {
     getMousePos (e) {
       this.cursorPos = {
@@ -80,6 +77,7 @@ export default {
       }
       // initialize draggable elements.
 
+      console.log(node)
       instance.draggable(node)
 
       instance.makeSource(node, {
@@ -101,11 +99,6 @@ export default {
         anchor: 'Continuous',
         allowLoopback: true
       })
-
-      // this is not part of the core demo functionality; it is a means for the Toolkit edition's wrapped
-      // version of this demo to find out about new nodes being added.
-      //
-      instance.fire('jsPlumbDemoNodeAdded', node)
     },
     newNode (x, y) {
       // Fix by 3th
@@ -128,18 +121,12 @@ export default {
       for (var i = 0; i < arr.length; i++) {
         this.initNode(arr[i], true)
       }
-
-      instance.connect({ source: 'opened', target: 'phone1', type: 'basic' })
-      instance.connect({ source: 'phone1', target: 'rotate', type: 'basic' })
-      instance.connect({ source: 'rotate', target: 'inperson', type: 'basic' })
     }
   },
   mounted () {
-    let vm = this
-
     jsPlumb.ready(function () {
       instance = jsPlumb.getInstance({
-        endpoint: ['Dot', {radius: 2}],
+        endpoint: ['Dot', {radius: 1}],
         HoverPaintStyle: {stroke: '#1e8151', strokeWidth: 2},
         ConnectionOverlays: [
           [ 'Arrow', {
@@ -153,8 +140,6 @@ export default {
         Container: 'diagramContainer'  // Container: 'canvas'
       })
 
-      window.jsp = instance
-
       instance.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
 
       instance.bind('connection', function (info) {
@@ -165,15 +150,7 @@ export default {
         instance.deleteConnection(c)
       })
 
-      vm.initConnection(jsPlumb.getSelector('.statemachine-demo .w'))
-
-      instance.connect({
-        source: 'inperson',
-        target: 'kick',
-        type: 'basic'
-      })
-
-      jsPlumb.fire('kuykuy', instance)
+      jsPlumb.fire('jsPlumbDemoNodeAdded', instance)
     })
   }
 }
@@ -214,7 +191,7 @@ export default {
   opacity: 0.8;
   cursor: move;
   background-color: white;
-  font-size: 11px;
+  font-size: 10px;
   -webkit-transition: background-color 0.25s ease-in;
   -moz-transition: background-color 0.25s ease-in;
   transition: background-color 0.25s ease-in;
