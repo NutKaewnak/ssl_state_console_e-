@@ -52,16 +52,17 @@ export default {
   watch: {
     currentRobot: function () {
       let vm = this
-      if (vm.ready) {
-        jsPlumb.setSuspendDrawing(true)
-        for (var i in vm.currentRobot._command) {
-          vm.$nextTick(function () {
-            var newNode = document.getElementById(`${vm.currentRobot._command[i]._id}`)
-            vm.initNode(newNode)
-          })
-        }
-        jsPlumb.setSuspendDrawing(false, true)
+      instance = vm.currentRobot._graph
+      jsPlumb.fire('jsPlumbDemoNodeAdded', instance)
+
+      jsPlumb.setSuspendDrawing(true)
+      for (var i in vm.currentRobot._command) {
+        vm.$nextTick(function () {
+          var newNode = document.getElementById(`${vm.currentRobot._command[i]._id}`)
+          vm.initNode(newNode)
+        })
       }
+      jsPlumb.setSuspendDrawing(false, true)
     }
   },
   methods: {
@@ -102,16 +103,16 @@ export default {
     },
     newNode (x, y) {
       // Fix by 3th
-      var d = document.createElement('div')
-      var id = Math.random() * 1000
-      d.className = 'w'
-      d.id = id
-      d.innerHTML = id
-      d.style.left = x + 'px'
-      d.style.top = y + 'px'
-      instance.getContainer().appendChild(d)
-      this.initNode(d)
-      return d
+      // var d = document.createElement('div')
+      // var id = Math.random() * 1000
+      // d.className = 'w'
+      // d.id = id
+      // d.innerHTML = id
+      // d.style.left = x + 'px'
+      // d.style.top = y + 'px'
+      // instance.getContainer().appendChild(d)
+      // this.initNode(d)
+      // return d
     },
     buildAndRun () {
       console.log(instance)
@@ -122,36 +123,6 @@ export default {
         this.initNode(arr[i], true)
       }
     }
-  },
-  mounted () {
-    jsPlumb.ready(function () {
-      instance = jsPlumb.getInstance({
-        endpoint: ['Dot', {radius: 1}],
-        HoverPaintStyle: {stroke: '#1e8151', strokeWidth: 2},
-        ConnectionOverlays: [
-          [ 'Arrow', {
-            location: 1,
-            id: 'arrow',
-            length: 14,
-            foldback: 0.8
-          } ],
-          ['Label', { label: 'FOO', id: 'label', cssClass: 'aLabel' }]
-        ],
-        Container: 'diagramContainer'  // Container: 'canvas'
-      })
-
-      instance.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
-
-      instance.bind('connection', function (info) {
-        info.connection.getOverlay('label').setLabel(info.connection.id)
-      })
-
-      instance.bind('click', function (c) {
-        instance.deleteConnection(c)
-      })
-
-      jsPlumb.fire('jsPlumbDemoNodeAdded', instance)
-    })
   }
 }
 </script>

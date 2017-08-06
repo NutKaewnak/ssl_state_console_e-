@@ -1,6 +1,7 @@
 'use strict'
 
 import blockFactory from '../block/blockFactory.js'
+const jsPlumb = require('jsplumb/dist/js/jsplumb.js').jsPlumb
 const WebSocket = require('ws')
 
 class Robot {
@@ -18,12 +19,37 @@ class Robot {
     this._constrain = null
     this._command = {}
     this._ws = null
+    this._graph = null
+    this.initGraph()
   }
   initWebSocket () {
     this._ws = new WebSocket('ws://' + this._ip + ':8081')
   }
   initGraph () {
+    this._graph = jsPlumb.getInstance({
+      endpoint: ['Dot', {radius: 1}],
+      HoverPaintStyle: {stroke: '#1e8151', strokeWidth: 2},
+      ConnectionOverlays: [
+        [ 'Arrow', {
+          location: 1,
+          id: 'arrow',
+          length: 14,
+          foldback: 0.8
+        } ],
+        ['Label', { label: 'FOO', id: 'label', cssClass: 'aLabel' }]
+      ],
+      Container: 'diagramContainer'  // Container: 'canvas'
+    })
 
+    this._graph.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
+
+    this._graph.bind('connection', function (info) {
+      info.connection.getOverlay('label').setLabel(info.connection.id)
+    })
+
+    this._graph.bind('click', function (c) {
+      this._graph.deleteConnection(c)
+    })
   }
   loadCommand (arr) {
     for (var cmd in arr) {
