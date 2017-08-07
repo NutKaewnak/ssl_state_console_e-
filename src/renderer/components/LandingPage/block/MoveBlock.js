@@ -1,8 +1,8 @@
 'use strict'
 
-import BlockCommand from './BlockCommand.js'
+import CommandBlock from './CommandBlock.js'
 
-class MoveBlock extends BlockCommand {
+class MoveBlock extends CommandBlock {
   /**
    * @param {Number} posLeft
    * @param {Number} posTop
@@ -11,6 +11,7 @@ class MoveBlock extends BlockCommand {
    */
   constructor (posLeft, posTop, point2d, time) {
     super(posLeft, posTop)
+    this._type = 'MoveBlock'
     this._id = `MoveBlock_${new Date().getTime()}`
     this._point = point2d
     this._time = time
