@@ -11,7 +11,7 @@ class CommandBlock extends Block {
     this._type = 'CommandBlock'
     this._nextBlock = null
   }
-  execute () {
+  execute (robot) {
 
   }
 }

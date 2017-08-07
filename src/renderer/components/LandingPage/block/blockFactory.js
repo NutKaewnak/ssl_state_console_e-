@@ -5,6 +5,10 @@ import CommandBlock from './CommandBlock.js'
 import DataBlock from './DataBlock.js'
 import MoveBlock from './MoveBlock.js'
 
+/**
+ * @param {*} cmd
+ * @return {Block} Block
+ */
 function blockFactory (cmd) {
   switch (cmd._type) {
     case 'Start':

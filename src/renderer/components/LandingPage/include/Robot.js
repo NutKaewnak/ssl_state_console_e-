@@ -17,7 +17,8 @@ class Robot {
     this._platform = platform
     this._saveFile = saveFile
     this._constrain = null
-    this._command = {}
+    this._commands = {}
+    this._currentBlock = null
     this._ws = null
     this._graph = null
     this.initGraph()
@@ -46,7 +47,6 @@ class Robot {
     this._graph.bind('connection', function (info) {
       info.connection.getOverlay('label').setLabel(info.connection.id)
     })
-
     this._graph.bind('click', function (c) {
       this._graph.deleteConnection(c)
     })
@@ -54,11 +54,19 @@ class Robot {
   loadCommand (arr) {
     for (var cmd in arr) {
       var command = blockFactory(arr[cmd])
-      this._command[command._id] = command
+      this._commands[command._id] = command
     }
   }
   sendCommand (command) {
     this._ws.send(command)
+  }
+  buildCommand () {
+    if (this._commands[0]._type === 'StartBlock') {
+      this._currentBlock = this._commands[0]
+    }
+  }
+  execute () {
+    this._currentBlock.execute()
   }
 }
 export default Robot

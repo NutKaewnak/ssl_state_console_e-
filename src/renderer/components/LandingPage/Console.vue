@@ -8,7 +8,7 @@
     class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan column is-6">
 
       <div v-if="ready">
-        <div v-for="cmd in currentRobot._command">
+        <div v-for="cmd in currentRobot._commands">
           <div class="w" :id="cmd._id" :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">{{cmd._type}}
             <div class="ep" :action="cmd._type"></div>
           </div>
@@ -56,9 +56,9 @@ export default {
       jsPlumb.fire('jsPlumbDemoNodeAdded', instance)
 
       jsPlumb.setSuspendDrawing(true)
-      for (var i in vm.currentRobot._command) {
+      for (var i in vm.currentRobot._commands) {
         vm.$nextTick(function () {
-          var newNode = document.getElementById(`${vm.currentRobot._command[i]._id}`)
+          var newNode = document.getElementById(`${vm.currentRobot._commands[i]._id}`)
           vm.initNode(newNode)
         })
       }

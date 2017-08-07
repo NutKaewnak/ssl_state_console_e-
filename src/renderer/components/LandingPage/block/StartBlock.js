@@ -7,8 +7,13 @@ class StartBlock extends CommandBlock {
     super(posLeft, posTop)
     this._type = 'StartBlock'
   }
-  execute () {
+
+  /**
+   * @param {Robot} robot
+   */
+  execute (robot) {
     if (this._nextBlock) {
+      robot.currentBlock = this._nextBlock
       this._nextBlock.execute()
     }
   }

@@ -65,6 +65,9 @@ export default {
     },
     // TODO: Implement this
     buildRobotsCommand () {
+      for (var i = 0; i < this.selectedRobots.length; i++) {
+        this.selectedRobots[i].buildCommand()
+      }
     },
 
     async sendCommand () {
