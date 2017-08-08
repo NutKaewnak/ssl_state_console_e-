@@ -44,13 +44,21 @@ export default {
   },
   methods: {
     selectRobot (robot) {
-      this.currentRobot = robot
-      if (this.selectedRobots.indexOf(robot) === -1) {
-        this.selectedRobots.push(robot)
+      let vm = this
+      if (vm.currentRobot) {
+        vm.currentRobot._graph.reset()
+        vm.currentRobot = null
+      }
+
+      if (vm.selectedRobots.indexOf(robot) === -1) {
+        vm.selectedRobots.push(robot)
         robot.initWebSocket()
+
         robot.command = JSON.parse(JSON.stringify(require('./LandingPage/data/testCompile.json')))
+
+        vm.$nextTick(() => { vm.currentRobot = robot })
       } else {
-        this.selectedRobots.splice(this.selectedRobots.indexOf(robot), 1)
+        vm.selectedRobots.splice(vm.selectedRobots.indexOf(robot), 1)
       }
     },
     isSelected (robot) {
