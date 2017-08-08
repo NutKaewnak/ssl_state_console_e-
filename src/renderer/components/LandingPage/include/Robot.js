@@ -48,9 +48,6 @@ class Robot {
     this._graph.bind('connection', function (info) {
       info.connection.getOverlay('label').setLabel(info.connection.id)
     })
-    this._graph.bind('click', function (c) {
-      this._graph.deleteConnection(c)
-    })
   }
   loadCommand (arr) {
     for (var cmd in arr) {

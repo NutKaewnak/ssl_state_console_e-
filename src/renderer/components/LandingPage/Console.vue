@@ -32,7 +32,6 @@
 </template>
 
 <script>
-var instance = null
 
 export default {
   props: ['currentRobot', 'robots', 'webSocket'],
@@ -51,16 +50,22 @@ export default {
     currentRobot: function () {
       let vm = this
       var i
-      instance = vm.currentRobot._graph
+      if (!vm.currentRobot) {
+        return
+      }
 
-      instance.setSuspendDrawing(true)
+      vm.instance = vm.currentRobot._graph
+      vm.instance.setSuspendDrawing(true)
+      vm.instance.bind('click', function (c) {
+        vm.instance.deleteConnection(c)
+      })
       for (i in vm.currentRobot._commands) {
         vm.$nextTick(function () {
           var newNode = document.getElementById(`${vm.currentRobot._commands[i]._id}`)
           vm.initNode(newNode)
         })
       }
-      instance.setSuspendDrawing(false, true)
+      vm.instance.setSuspendDrawing(false, true)
     }
   },
   methods: {
@@ -71,13 +76,14 @@ export default {
       }
     },
     initNode (node) {
-      if (!instance) {
+      let vm = this
+      if (!vm.instance) {
         return
       }
       // initialize draggable elements.
-      instance.draggable(node)
+      vm.instance.draggable(node)
 
-      instance.makeSource(node, {
+      vm.instance.makeSource(node, {
         filter: '.ep',
         anchor: 'Continuous',
         connectorStyle: { stroke: '#5c96bc', strokeWidth: 2, outlineStroke: 'transparent', outlineWidth: 4 },
@@ -91,7 +97,7 @@ export default {
         }
       })
 
-      instance.makeTarget(node, {
+      vm.instance.makeTarget(node, {
         dropOptions: { hoverClass: 'dragHover' },
         anchor: 'Continuous',
         allowLoopback: true
@@ -111,7 +117,6 @@ export default {
       // return d
     },
     buildAndRun () {
-      console.log(instance)
       this.$emit('buildAndRun')
     },
     initConnection (arr) {
@@ -119,13 +124,6 @@ export default {
         this.initNode(arr[i], true)
       }
     }
-  },
-  mounted () {
-    let vm = this
-    if (!vm.defaultEl) {
-      vm.defaultEl = vm.$el.cloneNode(true)
-    }
-    console.log(vm.defaultEl)
   }
 }
 </script>
