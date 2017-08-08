@@ -32,7 +32,7 @@
 </template>
 
 <script>
-const jsPlumb = require('jsplumb/dist/js/jsplumb.js').jsPlumb
+// const jsPlumb = require('jsplumb/dist/js/jsplumb.js').jsPlumb
 
 var instance = null
 
@@ -52,17 +52,19 @@ export default {
   watch: {
     currentRobot: function () {
       let vm = this
-      instance = vm.currentRobot._graph
-      jsPlumb.fire('jsPlumbDemoNodeAdded', instance)
+      // vm.$destroy(true)
 
-      jsPlumb.setSuspendDrawing(true)
+      instance = vm.currentRobot._graph
+      instance.fire('jsPlumbDemoNodeAdded', instance)
+
+      instance.setSuspendDrawing(true)
       for (var i in vm.currentRobot._commands) {
         vm.$nextTick(function () {
           var newNode = document.getElementById(`${vm.currentRobot._commands[i]._id}`)
           vm.initNode(newNode)
         })
       }
-      jsPlumb.setSuspendDrawing(false, true)
+      instance.setSuspendDrawing(false, true)
     }
   },
   methods: {
@@ -77,8 +79,6 @@ export default {
         return
       }
       // initialize draggable elements.
-
-      console.log(node)
       instance.draggable(node)
 
       instance.makeSource(node, {
@@ -123,6 +123,13 @@ export default {
         this.initNode(arr[i], true)
       }
     }
+  },
+  mounted () {
+    let vm = this
+    if (!vm.defaultEl) {
+      vm.defaultEl = vm.$el
+    }
+    console.log(vm.defaultEl)
   }
 }
 </script>

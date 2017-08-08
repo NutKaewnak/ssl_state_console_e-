@@ -18,6 +18,7 @@ class Robot {
     this._saveFile = saveFile
     this._constrain = null
     this._commands = {}
+    this.command = null  // fuck
     this._currentBlock = null
     this._ws = null
     this._graph = null

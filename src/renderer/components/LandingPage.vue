@@ -48,6 +48,7 @@ export default {
       if (this.selectedRobots.indexOf(robot) === -1) {
         this.selectedRobots.push(robot)
         robot.initWebSocket()
+        robot.command = JSON.parse(JSON.stringify(require('./LandingPage/data/testCompile.json')))
       } else {
         this.selectedRobots.splice(this.selectedRobots.indexOf(robot), 1)
       }
@@ -60,7 +61,7 @@ export default {
     },
 
     async buildAndRun () {
-      this.buildRobotsCommand()
+      // this.buildRobotsCommand()
       this.sendCommand()
     },
     // TODO: Implement this
@@ -72,7 +73,9 @@ export default {
 
     async sendCommand () {
       var startTime = new Date().getTime()
-      var timeLimit = 1000
+      var timeLimit = 2100
+
+      console.log(this.robots[5].command)
 
       while (new Date().getTime() - startTime < timeLimit) {
         // Timesharing
@@ -89,17 +92,23 @@ export default {
         case 10:
           if (this.isSelected(this.robots[5])) {
             console.log(deltaTime)
-            this.robots[5].sendCommand(JSON.stringify({}))
+            if (this.robots[5].command.length > 1) {
+              this.robots[5].sendCommand(JSON.stringify(this.robots[5].command.pop()))
+            }
           }
           break
         case 20:
           if (this.isSelected(this.robots[0])) {  // Captain
-            this.robots[0].sendCommand(JSON.stringify({}))
+            if (this.robots[0].command.length > 1) {
+              this.robots[0].sendCommand(JSON.stringify(this.robots[0].command.pop()))
+            }
           }
           break
         case 40:
           if (this.isSelected(this.robots[1])) {  // Hulk
-            this.robots[1].sendCommand(JSON.stringify({}))
+            if (this.robots[1].command.length > 1) {
+              this.robots[1].sendCommand(JSON.stringify(this.robots[1].command.pop()))
+            }
           }
           break
         case 60:
@@ -114,7 +123,9 @@ export default {
           break
         case 0:
           if (this.isSelected(this.robots[4])) {  // Black Widow
-            this.robots[4].sendCommand(JSON.stringify({}))
+            if (this.robots[4].command.length > 1) {
+              this.robots[4].sendCommand(JSON.stringify(this.robots[4].command.pop()))
+            }
           }
           break
       }
