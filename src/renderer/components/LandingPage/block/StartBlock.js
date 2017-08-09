@@ -7,6 +7,7 @@ class StartBlock extends CommandBlock {
     super(posLeft, posTop)
     this._type = 'StartBlock'
     this._id = this.makeID()
+    this._targetOption = null
   }
 
   /**

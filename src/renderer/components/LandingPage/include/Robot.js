@@ -42,7 +42,6 @@ class Robot {
       ],
       Container: 'diagramContainer'  // Container: 'canvas'
     })
-
     this._graph.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
 
     this._graph.bind('connection', function (info) {
@@ -58,6 +57,7 @@ class Robot {
   sendCommand (command) {
     this._ws.send(command)
   }
+  // check if necessary
   buildCommand () {
     if (this._commands[0]._type === 'StartBlock') {
       this._currentBlock = this._commands[0]

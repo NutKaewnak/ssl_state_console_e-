@@ -63,7 +63,7 @@ export default {
       vm.$nextTick(function () {
         for (i in vm.currentRobot._commands) {
           var newNode = document.getElementById(`${vm.currentRobot._commands[i]._id}`)
-          vm.initNode(newNode)
+          vm.initNode(newNode, vm.currentRobot._commands[i]._nodeOption, vm.currentRobot._commands[i]._targetOption)
         }
       })
       vm.instance.setSuspendDrawing(false, true)
@@ -76,36 +76,19 @@ export default {
         y: e.clientY
       }
     },
-    initNode (node) {
+    initNode (node, nodeOption, targetOption) {
       let vm = this
-
-      console.log(node)
 
       if (!vm.instance) {
         return
       }
+
       // initialize draggable elements.
       vm.instance.draggable(node)
-
-      vm.instance.makeSource(node, {
-        filter: '.ep',
-        anchor: 'Right',
-        connectorStyle: { stroke: '#5c96bc', strokeWidth: 2, outlineStroke: 'transparent', outlineWidth: 4 },
-        connectionType: 'basic',
-        extract: {
-          'action': 'the-action'
-        },
-        maxConnections: 5,
-        onMaxConnections: function (info, e) {
-          alert('Maximum connections (' + info.maxConnections + ') reached')
-        }
-      })
-
-      vm.instance.makeTarget(node, {
-        dropOptions: { hoverClass: 'dragHover' },
-        anchor: 'Left',
-        allowLoopback: true
-      })
+      vm.instance.makeSource(node, nodeOption)
+      if (targetOption) {
+        vm.instance.makeTarget(node, targetOption)
+      }
     },
     newNode (x, y) {
       // Fix by 3th
