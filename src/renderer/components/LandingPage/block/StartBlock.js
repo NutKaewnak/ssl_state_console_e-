@@ -3,10 +3,12 @@
 import CommandBlock from './CommandBlock.js'
 
 class StartBlock extends CommandBlock {
-  constructor (posLeft, posTop) {
-    super(posLeft, posTop)
+  constructor (posLeft, posTop, id) {
+    super(posLeft, posTop, id)
     this._type = 'StartBlock'
-    this._id = this.makeID()
+    if (!id) {
+      this._id = this.makeID()
+    }
     this._targetOption = null
   }
 

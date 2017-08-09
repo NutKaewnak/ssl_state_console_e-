@@ -12,13 +12,13 @@ import MoveBlock from './MoveBlock.js'
 function blockFactory (cmd) {
   switch (cmd._type) {
     case 'Start':
-      return new StartBlock(cmd._posLeft, cmd._posTop)
+      return new StartBlock(cmd._posLeft, cmd._posTop, cmd._id)
     case 'CommandBlock':
-      return new CommandBlock(cmd._posLeft, cmd._posTop)
+      return new CommandBlock(cmd._posLeft, cmd._posTop, cmd._id)
     case 'DataBlock':
-      return new DataBlock(cmd._posLeft, cmd._posTop, cmd._data)
+      return new DataBlock(cmd._posLeft, cmd._posTop, cmd._data, cmd._id)
     case 'MoveBlock':
-      return new MoveBlock(cmd._posLeft, cmd._posTop, cmd._point, cmd._time)
+      return new MoveBlock(cmd._posLeft, cmd._posTop, cmd._point, cmd._time, cmd._id)
   }
 }
 

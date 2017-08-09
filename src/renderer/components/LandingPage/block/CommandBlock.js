@@ -6,10 +6,12 @@ import Block from './Block.js'
  * @param {CommandBlock} parentBlock
  */
 class CommandBlock extends Block {
-  constructor (posLeft, posTop) {
-    super(posLeft, posTop)
+  constructor (posLeft, posTop, id) {
+    super(posLeft, posTop, id)
     this._type = 'CommandBlock'
-    this._id = this.makeID()
+    if (!id) {
+      this._id = this.makeID()
+    }
     this._nextBlock = null
 
     this._targetOption = {

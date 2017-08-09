@@ -4,13 +4,13 @@
     @mouseup="getMousePos"
     @touchend="getMousePos"
     id="diagramContainer" 
-    v-on:dblclick="newNode(cursorPos.x, cursorPos.y)"
+    v-on:dblclick="newNode()"
     class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan column is-6">
 
       <div v-if="ready">
         <div v-for="cmd in currentRobot._commands">
           <div class="w" :id="cmd._id" :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">{{cmd._type}}
-            <div class="target" :action="cmd._type"></div>
+            <div v-if="cmd._targetOption" class="target"></div>
             <div class="ep" :action="cmd._type"></div>
           </div>
         </div>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import blockFactory from './block/blockFactory.js'
 
 export default {
   props: ['currentRobot', 'robots', 'webSocket'],
@@ -50,20 +51,21 @@ export default {
   watch: {
     currentRobot: function () {
       let vm = this
-      var i
+
       if (!vm.currentRobot) {
         return
       }
-
       vm.instance = vm.currentRobot._graph
-      vm.instance.setSuspendDrawing(true)
+
       vm.instance.bind('click', function (c) {
         vm.instance.deleteConnection(c)
       })
+
+      vm.instance.setSuspendDrawing(true)
       vm.$nextTick(function () {
-        for (i in vm.currentRobot._commands) {
+        for (var i in vm.currentRobot._commands) {
           var newNode = document.getElementById(`${vm.currentRobot._commands[i]._id}`)
-          vm.initNode(newNode, vm.currentRobot._commands[i]._nodeOption, vm.currentRobot._commands[i]._targetOption)
+          vm.initNode(newNode, vm.currentRobot._commands[i])
         }
       })
       vm.instance.setSuspendDrawing(false, true)
@@ -76,13 +78,15 @@ export default {
         y: e.clientY
       }
     },
-    initNode (node, nodeOption, targetOption) {
+    initNode (node, command) {
       let vm = this
 
       if (!vm.instance) {
         return
       }
 
+      var nodeOption = command._nodeOption
+      var targetOption = command._targetOption
       // initialize draggable elements.
       vm.instance.draggable(node)
       vm.instance.makeSource(node, nodeOption)
@@ -90,18 +94,21 @@ export default {
         vm.instance.makeTarget(node, targetOption)
       }
     },
-    newNode (x, y) {
-      // Fix by 3th
-      // var d = document.createElement('div')
-      // var id = Math.random() * 1000
-      // d.className = 'w'
-      // d.id = id
-      // d.innerHTML = id
-      // d.style.left = x + 'px'
-      // d.style.top = y + 'px'
-      // instance.getContainer().appendChild(d)
-      // this.initNode(d)
-      // return d
+    newNode () {
+      let vm = this
+
+      if (!vm.currentRobot) {
+        return
+      }
+      var command = blockFactory({_type: 'CommandBlock'})
+      vm.$set(vm.currentRobot._commands, command._id, command)
+
+      vm.instance.setSuspendDrawing(true)
+
+      vm.$nextTick(function () {
+        vm.initNode(document.getElementById(command._id), command)
+      })
+      vm.instance.setSuspendDrawing(false, true)
     },
     buildAndRun () {
       this.$emit('buildAndRun')

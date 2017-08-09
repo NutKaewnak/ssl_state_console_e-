@@ -5,17 +5,20 @@ class Block {
    * @param {Number} posLeft
    * @param {Number} posTop
    */
-  constructor (posLeft, posTop) {
+  constructor (posLeft, posTop, id) {
+    this._type = 'Block'
+    this._id = id
+
     if (posLeft) {
-      posLeft = 5
+      this._posLeft = posLeft
+    } else {
+      this._posLeft = 5
     }
     if (posTop) {
-      posTop = 5
+      this._posTop = posTop
+    } else {
+      this._posTop = 5
     }
-    this._type = 'Block'
-    this._id = this.makeID()
-    this._posLeft = posLeft
-    this._posTop = posTop
     this._nodeOption = {
       filter: '.ep',
       anchor: 'Right',

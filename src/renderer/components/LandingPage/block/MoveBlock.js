@@ -9,10 +9,12 @@ class MoveBlock extends CommandBlock {
    * @param {Point2d} point2d
    * @param {Number} time
    */
-  constructor (posLeft, posTop, point2d, time) {
-    super(posLeft, posTop)
+  constructor (posLeft, posTop, point2d, time, id) {
+    super(posLeft, posTop, id)
     this._type = 'MoveBlock'
-    this._id = `MoveBlock_${new Date().getTime()}`
+    if (!id) {
+      this._id = this.makeID()
+    }
     this._point = point2d
     this._time = time
   }

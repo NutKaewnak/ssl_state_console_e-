@@ -3,10 +3,12 @@
 import Block from './Block.js'
 
 class DataBlock extends Block {
-  constructor (posLeft, posTop, data) {
-    super(posLeft, posTop)
+  constructor (posLeft, posTop, data, id) {
+    super(posLeft, posTop, id)
     this._type = 'DataBlock'
-    this._id = this.makeID()
+    if (!id) {
+      this._id = this.makeID()
+    }
     this._data = data
   }
   getValue () {
