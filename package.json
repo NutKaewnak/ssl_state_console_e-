@@ -1,6 +1,6 @@
 {
   "name": "ssl_state_console_e-",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "nutkaewnak <nut-boss@hotmail.com>",
   "description": "Console for SSL robot using electron",
   "license": "BSD",

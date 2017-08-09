@@ -4,12 +4,15 @@
     @mouseup="getMousePos"
     @touchend="getMousePos"
     id="diagramContainer" 
-    v-on:dblclick="newNode()"
     class="jtk-demo-canvas canvas-wide statemachine-demo jtk-surface jtk-surface-nopan column is-6">
 
       <div v-if="ready">
         <div v-for="cmd in currentRobot._commands">
-          <div v-if="cmd._type !== 'Connection'" class="w" :id="cmd._id" :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">{{cmd._type}}
+          <div v-if="cmd && cmd._type !== 'Connection'"
+          v-on:dblclick="deleteNode(cmd)"
+          class="w" :id="cmd._id"
+          :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">
+          {{cmd._type}}
             <div v-if="cmd._targetOption" class="target"></div>
             <div class="ep" :action="cmd._type"></div>
           </div>
@@ -123,6 +126,13 @@ export default {
         vm.initNode(document.getElementById(command._id), command)
       })
       vm.instance.setSuspendDrawing(false, true)
+    },
+    deleteNode (cmd) {
+      if (cmd._type === 'StartBlock') {
+        return
+      }
+      this.instance.remove(cmd._id)
+      delete this.currentRobot._commands[cmd._id]
     },
     saveGraph () {
       this.currentRobot.saveCommand()

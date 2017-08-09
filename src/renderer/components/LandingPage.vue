@@ -83,8 +83,6 @@ export default {
       var startTime = new Date().getTime()
       var timeLimit = 2100
 
-      console.log(this.robots[5].command)
-
       while (new Date().getTime() - startTime < timeLimit) {
         // Timesharing
         this.sleep(10)

@@ -67,7 +67,6 @@ class Robot {
     }
     var arr = require(`../data/${this._saveFile}`)
     for (var i in arr) {
-      console.log(arr[i])
       var command = blockFactory(arr[i])
       this._commands[command._id] = command
     }
