@@ -6,6 +6,7 @@ class StartBlock extends CommandBlock {
   constructor (posLeft, posTop) {
     super(posLeft, posTop)
     this._type = 'StartBlock'
+    this._id = this.makeID()
   }
 
   /**

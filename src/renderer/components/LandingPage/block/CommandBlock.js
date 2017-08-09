@@ -9,6 +9,7 @@ class CommandBlock extends Block {
   constructor (posLeft, posTop) {
     super(posLeft, posTop)
     this._type = 'CommandBlock'
+    this._id = this.makeID()
     this._nextBlock = null
   }
   execute (robot) {
