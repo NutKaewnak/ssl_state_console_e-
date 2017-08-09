@@ -9,7 +9,7 @@
 
       <div v-if="ready">
         <div v-for="cmd in currentRobot._commands">
-          <div class="w" :id="cmd._id" :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">{{cmd._type}}
+          <div v-if="cmd._type !== 'Connection'" class="w" :id="cmd._id" :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">{{cmd._type}}
             <div v-if="cmd._targetOption" class="target"></div>
             <div class="ep" :action="cmd._type"></div>
           </div>
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import Block from './block/Block.js'
+import Connection from './block/Connection.js'
 import blockFactory from './block/blockFactory.js'
 
 export default {
@@ -64,8 +66,17 @@ export default {
       vm.instance.setSuspendDrawing(true)
       vm.$nextTick(function () {
         for (var i in vm.currentRobot._commands) {
-          var newNode = document.getElementById(`${vm.currentRobot._commands[i]._id}`)
-          vm.initNode(newNode, vm.currentRobot._commands[i])
+          var command = vm.currentRobot._commands[i]
+
+          if (command instanceof Block) {
+            var newNode = document.getElementById(`${command._id}`)
+            vm.initNode(newNode, command)
+          } else if (command instanceof Connection) {
+            vm.instance.connect({
+              source: command._sourceNode,
+              target: command._targetNode
+            })
+          }
         }
       })
       vm.instance.setSuspendDrawing(false, true)
