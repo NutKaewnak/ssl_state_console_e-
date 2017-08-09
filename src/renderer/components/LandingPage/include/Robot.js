@@ -28,7 +28,8 @@ class Robot {
     this._ws = new WebSocket('ws://' + this._ip + ':8081')
   }
   initGraph () {
-    this._graph = jsPlumb.getInstance({
+    let robot = this
+    robot._graph = jsPlumb.getInstance({
       endpoint: ['Dot', {radius: 1}],
       HoverPaintStyle: {stroke: '#1e8151', strokeWidth: 2},
       ConnectionOverlays: [
@@ -42,9 +43,12 @@ class Robot {
       ],
       Container: 'diagramContainer'  // Container: 'canvas'
     })
-    this._graph.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
+    robot._graph.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
 
-    this._graph.bind('connection', function (info) {
+    robot._graph.bind('connection', function (info) {
+      console.log(info.sourceId)
+      console.log(info.targetId)
+      robot._commands[info.sourceId]._nextBlock = robot._commands[info.targetId]
       info.connection.getOverlay('label').setLabel(info.connection.id)
     })
   }
