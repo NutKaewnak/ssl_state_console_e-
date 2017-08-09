@@ -27,6 +27,9 @@
         </a><br/>
       </div>
       <br/>
+      <a v-on:click="saveGraph()" class="button is-danger">SAVE</a>
+      <br/>
+      <br/>
       <a v-on:click="buildAndRun()" class="button is-danger">BUILD AND RUN</a>
     </div>
   </div>
@@ -120,6 +123,9 @@ export default {
         vm.initNode(document.getElementById(command._id), command)
       })
       vm.instance.setSuspendDrawing(false, true)
+    },
+    saveGraph () {
+      this.currentRobot.saveCommand()
     },
     buildAndRun () {
       this.$emit('buildAndRun')

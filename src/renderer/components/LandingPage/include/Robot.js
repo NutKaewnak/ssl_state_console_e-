@@ -1,6 +1,7 @@
 'use strict'
 
 import blockFactory from '../block/blockFactory.js'
+const fs = require('fs')
 const jsPlumb = require('jsplumb/dist/js/jsplumb.js').jsPlumb
 const WebSocket = require('ws')
 
@@ -18,10 +19,10 @@ class Robot {
     this._saveFile = saveFile
     this._constrain = null
     this._commands = {}
-    this.command = null  // fuck
     this._currentBlock = null
     this._ws = null
     this._graph = null
+    this.loadCommand()
     this.initGraph()
   }
   initWebSocket () {
@@ -46,17 +47,36 @@ class Robot {
     robot._graph.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
 
     robot._graph.bind('connection', function (info) {
-      console.log(info.sourceId)
-      console.log(info.targetId)
       robot._commands[info.sourceId]._nextBlock = robot._commands[info.targetId]
+
+      var newConnection = blockFactory({
+        _type: 'Connection',
+        _sourceNode: info.sourceId,
+        _targetNode: info.targetId
+      })
+      robot._commands[newConnection._id] = newConnection
+
+      // robot.saveCommand()  // autosave
+
       info.connection.getOverlay('label').setLabel(info.connection.id)
     })
   }
-  loadCommand (arr) {
-    for (var cmd in arr) {
-      var command = blockFactory(arr[cmd])
+  loadCommand () {
+    if (!this._saveFile) {
+      return
+    }
+    var arr = require(`../data/${this._saveFile}`)
+    for (var i in arr) {
+      console.log(arr[i])
+      var command = blockFactory(arr[i])
       this._commands[command._id] = command
     }
+  }
+  saveCommand () {
+    if (!this._saveFile) {
+      return
+    }
+    fs.writeFileSync(`${__dirname}/../data/${this._saveFile}`, JSON.stringify(this._commands))
   }
   sendCommand (command) {
     this._ws.send(command)
