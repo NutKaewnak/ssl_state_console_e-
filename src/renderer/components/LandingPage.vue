@@ -125,7 +125,7 @@ export default {
           }
           break
         case 80:
-          if (this.isSelected(this.robots[3])) {  // Iron man
+          if (this.isSelected(this.robots[3])) {  // Thor
             this.robots[3].sendCommand(JSON.stringify({}))
           }
           break
@@ -151,7 +151,7 @@ export default {
     for (var i = 0; i < robotList.length; i++) {
       vm.initRobot(robotList[i])
     }
-    vm.robots[4].loadCommand(require(`./${dataPath}${vm.robots[5]._saveFile}`))
+    vm.robots[4].loadCommand(require(`./${dataPath}${vm.robots[4]._saveFile}`))
     vm.robots[5].loadCommand(require(`./${dataPath}${vm.robots[5]._saveFile}`))
   }
 }

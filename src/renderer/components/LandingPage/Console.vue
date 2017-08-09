@@ -10,6 +10,7 @@
       <div v-if="ready">
         <div v-for="cmd in currentRobot._commands">
           <div class="w" :id="cmd._id" :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">{{cmd._type}}
+            <div class="target" :action="cmd._type"></div>
             <div class="ep" :action="cmd._type"></div>
           </div>
         </div>
@@ -59,12 +60,12 @@ export default {
       vm.instance.bind('click', function (c) {
         vm.instance.deleteConnection(c)
       })
-      for (i in vm.currentRobot._commands) {
-        vm.$nextTick(function () {
+      vm.$nextTick(function () {
+        for (i in vm.currentRobot._commands) {
           var newNode = document.getElementById(`${vm.currentRobot._commands[i]._id}`)
           vm.initNode(newNode)
-        })
-      }
+        }
+      })
       vm.instance.setSuspendDrawing(false, true)
     }
   },
@@ -77,6 +78,9 @@ export default {
     },
     initNode (node) {
       let vm = this
+
+      console.log(node)
+
       if (!vm.instance) {
         return
       }
@@ -85,7 +89,7 @@ export default {
 
       vm.instance.makeSource(node, {
         filter: '.ep',
-        anchor: 'Continuous',
+        anchor: 'Right',
         connectorStyle: { stroke: '#5c96bc', strokeWidth: 2, outlineStroke: 'transparent', outlineWidth: 4 },
         connectionType: 'basic',
         extract: {
@@ -99,7 +103,7 @@ export default {
 
       vm.instance.makeTarget(node, {
         dropOptions: { hoverClass: 'dragHover' },
-        anchor: 'Continuous',
+        anchor: 'Left',
         allowLoopback: true
       })
     },
@@ -209,6 +213,24 @@ export default {
 }
 
 .ep:hover {
+  box-shadow: 0 0 6px black;
+}
+
+.target {
+  position: absolute;
+  bottom: 37%;
+  left: 5px;
+  width: 1em;
+  height: 1em;
+  background-color: gray;
+  cursor: pointer;
+  box-shadow: 0 0 2px black;
+  -webkit-transition: -webkit-box-shadow 0.25s ease-in;
+  -moz-transition: -moz-box-shadow 0.25s ease-in;
+  transition: box-shadow 0.25s ease-in;
+}
+
+.target:hover {
   box-shadow: 0 0 6px black;
 }
 
