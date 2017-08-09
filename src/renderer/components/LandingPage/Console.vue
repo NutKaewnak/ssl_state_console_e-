@@ -15,6 +15,7 @@
           {{cmd._type}}
             <div v-if="cmd._targetOption" class="target"></div>
             <div class="ep" :action="cmd._type"></div>
+            <div v-if="cmd._type === 'MoveBlock'" v-on:click="promptMoveVal(cmd._point)" class="input">{{cmd._point}}</div>
           </div>
         </div>
       </div>
@@ -22,11 +23,9 @@
 
     <div class="column box">
       <div class="block">
-        <a class="button is-info is-outlined" id="move-btn">MOVE
+        <a v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE
         </a><br/>
-        <a class="button is-info is-outlined" id="condition-btn">CONDITION
-        </a><br/>
-        <a class="button is-info is-outlined" id="var-btn">VARIABLE
+        <a v-on:click="newDataNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
         </a><br/>
       </div>
       <br/>
@@ -42,6 +41,8 @@
 import Block from './block/Block.js'
 import Connection from './block/Connection.js'
 import blockFactory from './block/blockFactory.js'
+
+import Point2d from './include/model/Point2d.js'
 
 export default {
   props: ['currentRobot', 'robots', 'webSocket'],
@@ -112,13 +113,17 @@ export default {
         vm.instance.makeTarget(node, targetOption)
       }
     },
-    newNode () {
+    newMoveNode () {
       let vm = this
 
       if (!vm.currentRobot) {
         return
       }
-      var command = blockFactory({_type: 'CommandBlock'})
+      var command = blockFactory({
+        _type: 'MoveBlock',
+        _point: new Point2d(0, 1, 0),
+        _time: 1
+      })
       vm.$set(vm.currentRobot._commands, command._id, command)
 
       vm.instance.setSuspendDrawing(true)
@@ -127,6 +132,31 @@ export default {
         vm.initNode(document.getElementById(command._id), command)
       })
       vm.instance.setSuspendDrawing(false, true)
+    },
+    newDataNode () {
+      let vm = this
+
+      if (!vm.currentRobot) {
+        return
+      }
+
+      var command = blockFactory({
+        _type: 'DataBlock',
+        _data: 1
+      })
+      vm.$set(vm.currentRobot._commands, command._id, command)
+
+      vm.instance.setSuspendDrawing(true)
+
+      vm.$nextTick(function () {
+        vm.initNode(document.getElementById(command._id), command)
+      })
+      vm.instance.setSuspendDrawing(false, true)
+    },
+    promptMoveVal (point) {
+      var str = window.prompt('Input new velocity', '0, 1, 0')
+      var newPoint = str.split(',')
+      point = new Point2d(parseInt(newPoint[0]), parseInt(newPoint[1]), parseInt(newPoint[2]))
     },
     deleteNode (cmd) {
       if (cmd._type === 'StartBlock') {
@@ -140,11 +170,6 @@ export default {
     },
     buildAndRun () {
       this.$emit('buildAndRun')
-    },
-    initConnection (arr) {
-      for (var i = 0; i < arr.length; i++) {
-        this.initNode(arr[i], true)
-      }
     }
   }
 }
@@ -225,6 +250,17 @@ export default {
   background-color: orange;
   cursor: pointer;
   box-shadow: 0 0 2px black;
+  -webkit-transition: -webkit-box-shadow 0.25s ease-in;
+  -moz-transition: -moz-box-shadow 0.25s ease-in;
+  transition: box-shadow 0.25s ease-in;
+}
+
+.input {
+  position: absolute;
+  bottom: 10%;
+  left: 10px;
+  font-size: 6px;
+  cursor: pointer;
   -webkit-transition: -webkit-box-shadow 0.25s ease-in;
   -moz-transition: -moz-box-shadow 0.25s ease-in;
   transition: box-shadow 0.25s ease-in;

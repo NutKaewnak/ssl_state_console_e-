@@ -9,6 +9,7 @@ class DataBlock extends Block {
     if (!id) {
       this._id = this.makeID()
     }
+    this._nodeOption.maxConnections = -1
     this._data = data
   }
   getValue () {
