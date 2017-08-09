@@ -24,9 +24,9 @@
       <div class="block">
         <a class="button is-info is-outlined" id="move-btn">MOVE
         </a><br/>
-        <a class="button is-info is-outlined" id="rotate-btn">ROTATE
+        <a class="button is-info is-outlined" id="condition-btn">CONDITION
         </a><br/>
-        <a class="button is-info is-outlined" id="kick-btn">KICK
+        <a class="button is-info is-outlined" id="var-btn">VARIABLE
         </a><br/>
       </div>
       <br/>
@@ -80,7 +80,8 @@ export default {
           } else if (command instanceof Connection) {
             vm.instance.connect({
               source: command._sourceNode,
-              target: command._targetNode
+              target: command._targetNode,
+              anchors: ['Right', 'Left']
             })
           }
         }
