@@ -12,7 +12,6 @@ class CommandBlock extends Block {
     if (!id) {
       this._id = this.makeID()
     }
-    this._nextBlock = null
 
     this._targetOption = {
       dropOptions: { hoverClass: 'dragHover' },

@@ -26,14 +26,17 @@ class MoveBlock extends CommandBlock {
    */
   beforeExecute (robot) {
     this._startTime = new Date().getTime()
-    console.log(`Moving to ${this._point}`)
+    console.log(`Moving to ${JSON.stringify(this._point)}`)
   }
   /**
    * @param {Robot} robot
    */
   execute (robot) {
     if (new Date().getTime() - this._startTime <= this._time * 1000) {
+      console.log('kuy1')
+      console.log(omniDirectionVelTransform(this._point))
       robot.sendCommand(JSON.stringify({'id': '00', 'type': 3, 'data': omniDirectionVelTransform(this._point).toString()}))
+      console.log('kuy2')
     }
   }
 }

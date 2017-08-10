@@ -29,6 +29,7 @@ class Block {
       },
       maxConnections: 1
     }
+    this._nextBlock = null
   }
   makeID () {
     var now = new Date().getTime()

@@ -83,11 +83,18 @@ export default {
               vm.currentRobot._currentBlock = command
             }
           } else if (command instanceof Connection) {
-            vm.instance.connect({
-              source: command._sourceNode,
-              target: command._targetNode,
-              anchors: ['Right', 'Left']
-            })
+            // check connection TODO: define method
+            if (vm.currentRobot._commands[command._sourceNode] &&
+            vm.currentRobot._commands[command._targetNode] &&
+            !vm.currentRobot._commands[command._sourceNode]._nextBlock) {
+              vm.instance.connect({
+                source: command._sourceNode,
+                target: command._targetNode,
+                anchors: ['Right', 'Left']
+              })
+            } else {
+              delete vm.currentRobot._commands[i]
+            }
           }
         }
       })

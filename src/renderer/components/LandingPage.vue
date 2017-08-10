@@ -93,7 +93,7 @@ export default {
         this.timeSlotChecker(now - startTime)
       }
     },
-    timeSlotChecker (deltaTime) {
+    async timeSlotChecker (deltaTime) {
       switch ((deltaTime) % 100) {
         case 10:
           if (this.isSelected(this.robots[5])) {
