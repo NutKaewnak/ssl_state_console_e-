@@ -20,7 +20,19 @@ class CommandBlock extends Block {
       allowLoopback: true
     }
   }
+  /**
+   * @param {Robot} robot
+   */
+  beforeExecute (robot) {
+  }
+  /**
+   * @param {Robot} robot
+   */
   execute (robot) {
+  }
+  changeStateToNextBlock (robot) {
+    this._nextBlock.beforeExecute()
+    robot._currentBlock = this._nextBlock
   }
 }
 export default CommandBlock

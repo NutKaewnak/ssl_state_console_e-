@@ -1,6 +1,7 @@
 'use strict'
 
 import CommandBlock from './CommandBlock.js'
+import omniDirectionVelTransform from '../include/omniDirectionVelTransform.js'
 
 class MoveBlock extends CommandBlock {
   /**
@@ -17,10 +18,23 @@ class MoveBlock extends CommandBlock {
     }
     this._point = point2d
     this._time = time
+    this._startTime = null
   }
 
+  /**
+   * @param {Robot} robot
+   */
+  beforeExecute (robot) {
+    this._startTime = new Date().getTime()
+    console.log(`Moving to ${this._point}`)
+  }
+  /**
+   * @param {Robot} robot
+   */
   execute (robot) {
-    robot.sendCommand(this._point)
+    if (new Date().getTime() - this._startTime <= this._time * 1000) {
+      robot.sendCommand(JSON.stringify({'id': '00', 'type': 3, 'data': omniDirectionVelTransform(this._point).toString()}))
+    }
   }
 }
 export default MoveBlock

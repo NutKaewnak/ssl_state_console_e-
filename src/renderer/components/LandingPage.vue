@@ -69,7 +69,7 @@ export default {
     },
 
     async buildAndRun () {
-      // this.buildRobotsCommand()
+      this.buildRobotsCommand()
       this.sendCommand()
     },
     // TODO: Implement this
@@ -97,41 +97,32 @@ export default {
       switch ((deltaTime) % 100) {
         case 10:
           if (this.isSelected(this.robots[5])) {
-            console.log(deltaTime)
-            if (this.robots[5].command.length > 1) {
-              this.robots[5].sendCommand(JSON.stringify(this.robots[5].command.pop()))
-            }
+            this.robots[5]._currentBlock.execute(this.robots[5])
           }
           break
         case 20:
           if (this.isSelected(this.robots[0])) {  // Captain
-            if (this.robots[0].command.length > 1) {
-              this.robots[0].sendCommand(JSON.stringify(this.robots[0].command.pop()))
-            }
+            this.robots[0]._currentBlock.execute(this.robots[0])
           }
           break
         case 40:
           if (this.isSelected(this.robots[1])) {  // Hulk
-            if (this.robots[1].command.length > 1) {
-              this.robots[1].sendCommand(JSON.stringify(this.robots[1].command.pop()))
-            }
+            this.robots[1]._currentBlock.execute(this.robots[1])
           }
           break
         case 60:
           if (this.isSelected(this.robots[2])) {  // Iron man
-            this.robots[2].sendCommand(JSON.stringify({}))
+            this.robots[2]._currentBlock.execute(this.robots[2])
           }
           break
         case 80:
           if (this.isSelected(this.robots[3])) {  // Thor
-            this.robots[3].sendCommand(JSON.stringify({}))
+            this.robots[3]._currentBlock.execute(this.robots[3])
           }
           break
         case 0:
           if (this.isSelected(this.robots[4])) {  // Black Widow
-            if (this.robots[4].command.length > 1) {
-              this.robots[4].sendCommand(JSON.stringify(this.robots[4].command.pop()))
-            }
+            this.robots[4]._currentBlock.execute(this.robots[4])
           }
           break
       }

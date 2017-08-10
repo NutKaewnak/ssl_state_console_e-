@@ -82,8 +82,9 @@ class Robot {
   }
   // check if necessary
   buildCommand () {
-    if (this._commands[0]._type === 'StartBlock') {
-      this._currentBlock = this._commands[0]
+    console.log(this._currentBlock)
+    if (this._currentBlock._type === 'StartBlock') {
+      console.log('Check correct')
     }
   }
   execute () {

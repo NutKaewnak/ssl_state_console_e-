@@ -16,9 +16,9 @@ class StartBlock extends CommandBlock {
    * @param {Robot} robot
    */
   execute (robot) {
+    console.log(`${robot._name} started!`)
     if (this._nextBlock) {
-      robot.currentBlock = this._nextBlock
-      this._nextBlock.execute()
+      this.changeStateToNextBlock(robot)
     }
   }
 }

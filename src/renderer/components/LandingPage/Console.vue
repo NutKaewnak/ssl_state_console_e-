@@ -39,6 +39,7 @@
 
 <script>
 import Block from './block/Block.js'
+import StartBlock from './block/StartBlock.js'
 import Connection from './block/Connection.js'
 import blockFactory from './block/blockFactory.js'
 
@@ -78,6 +79,9 @@ export default {
           if (command instanceof Block) {
             var newNode = document.getElementById(`${command._id}`)
             vm.initNode(newNode, command)
+            if (command instanceof StartBlock) {
+              vm.currentRobot._currentBlock = command
+            }
           } else if (command instanceof Connection) {
             vm.instance.connect({
               source: command._sourceNode,
