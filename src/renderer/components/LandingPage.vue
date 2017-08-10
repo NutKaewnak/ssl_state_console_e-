@@ -81,7 +81,7 @@ export default {
 
     async sendCommand () {
       var startTime = new Date().getTime()
-      var timeLimit = 2100
+      var timeLimit = 5100  // check battery instead
 
       while (new Date().getTime() - startTime < timeLimit) {
         // Timesharing

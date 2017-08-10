@@ -1,6 +1,7 @@
 'use strict'
 
 import CommandBlock from './CommandBlock.js'
+import Point2d from '../include/model/Point2d.js'
 import omniDirectionVelTransform from '../include/omniDirectionVelTransform.js'
 
 class MoveBlock extends CommandBlock {
@@ -16,7 +17,13 @@ class MoveBlock extends CommandBlock {
     if (!id) {
       this._id = this.makeID()
     }
-    this._point = point2d
+    if (point2d) {
+      if (point2d instanceof Point2d) {
+        this._point = point2d
+      } else {
+        this._point = new Point2d(point2d._x, point2d._y, point2d._w)
+      }
+    }
     this._time = time
     this._startTime = null
   }
@@ -27,16 +34,17 @@ class MoveBlock extends CommandBlock {
   beforeExecute (robot) {
     this._startTime = new Date().getTime()
     console.log(`Moving to ${JSON.stringify(this._point)}`)
+    console.log(this._point instanceof Point2d)
   }
   /**
    * @param {Robot} robot
    */
   execute (robot) {
     if (new Date().getTime() - this._startTime <= this._time * 1000) {
-      console.log('kuy1')
-      console.log(omniDirectionVelTransform(this._point))
       robot.sendCommand(JSON.stringify({'id': '00', 'type': 3, 'data': omniDirectionVelTransform(this._point).toString()}))
-      console.log('kuy2')
+    } else if (this._nextBlock) {
+      console.log(this._nextBlock)
+      this.changeStateToNextBlock(robot)
     }
   }
 }

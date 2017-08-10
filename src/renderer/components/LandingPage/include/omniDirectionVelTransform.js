@@ -93,8 +93,9 @@ function omniDirectionVelTransform (point2d, BIAS) {
   } else {
     speedWheel4 = wheel4 * 127 + 128
   }
+  var out = new RobotVel(speedWheel1, speedWheel2, speedWheel3, speedWheel4)
 
-  return new RobotVel(speedWheel1, speedWheel2, speedWheel3, speedWheel4)
+  return out
 }
 
 export default omniDirectionVelTransform
