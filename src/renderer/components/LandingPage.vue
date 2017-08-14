@@ -53,6 +53,8 @@ export default {
       if (vm.selectedRobots.indexOf(robot) === -1) {
         vm.selectedRobots.push(robot)
         robot.initWebSocket()
+        robot.loadCommand()
+        robot.initGraph()
 
         robot.command = JSON.parse(JSON.stringify(require('./LandingPage/data/testCompile.json')))
 

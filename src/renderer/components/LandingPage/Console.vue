@@ -74,6 +74,7 @@ export default {
       vm.instance.setSuspendDrawing(true)
 
       vm.$nextTick(function () {
+        console.log(vm.currentRobot._commands)
         for (var i in vm.currentRobot._commands) {
           var command = vm.currentRobot._commands[i]
 
@@ -85,6 +86,7 @@ export default {
             }
           } else if (command instanceof Connection) {
             // check connection TODO: define method
+            console.log('kuy')
             if (vm.currentRobot._commands[command._sourceNode] &&
             vm.currentRobot._commands[command._targetNode] &&
             !vm.currentRobot._commands[command._sourceNode]._nextBlock) {

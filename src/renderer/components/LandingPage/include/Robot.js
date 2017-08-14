@@ -22,8 +22,6 @@ class Robot {
     this._currentBlock = null
     this._ws = null
     this._graph = null
-    this.loadCommand()
-    this.initGraph()
   }
   initWebSocket () {
     this._ws = new WebSocket('ws://' + this._ip + ':8081')
