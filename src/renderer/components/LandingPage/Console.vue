@@ -72,6 +72,7 @@ export default {
       })
 
       vm.instance.setSuspendDrawing(true)
+
       vm.$nextTick(function () {
         for (var i in vm.currentRobot._commands) {
           var command = vm.currentRobot._commands[i]

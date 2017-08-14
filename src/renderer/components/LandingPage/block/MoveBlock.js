@@ -21,7 +21,7 @@ class MoveBlock extends CommandBlock {
       if (point2d instanceof Point2d) {
         this._point = point2d
       } else {
-        this._point = new Point2d(point2d._x, point2d._y, point2d._w)
+        this._point = Point2d.createPointFromJson(point2d)
       }
     }
     this._time = time
