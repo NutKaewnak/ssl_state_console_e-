@@ -73,6 +73,7 @@ class Robot {
     if (!this._saveFile) {
       return
     }
+    console.log(this._commands)
     fs.writeFileSync(`${__dirname}/../data/${this._saveFile}`, JSON.stringify(this._commands))
   }
   sendCommand (command) {

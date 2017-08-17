@@ -68,13 +68,14 @@ export default {
       vm.instance = vm.currentRobot._graph
 
       vm.instance.bind('click', function (c) {
+        console.log(c)
+        vm.deleteConnection(c)
         vm.instance.deleteConnection(c)
       })
 
       vm.instance.setSuspendDrawing(true)
 
       vm.$nextTick(function () {
-        console.log(vm.currentRobot._commands)
         for (var i in vm.currentRobot._commands) {
           var command = vm.currentRobot._commands[i]
 
@@ -86,21 +87,11 @@ export default {
             }
           } else if (command instanceof Connection) {
             // check connection TODO: define method
-            console.log('kuy')
-            if (vm.currentRobot._commands[command._sourceNode] &&
-            vm.currentRobot._commands[command._targetNode] &&
-            !vm.currentRobot._commands[command._sourceNode]._nextBlock) {
-              vm.instance.connect({
-                source: command._sourceNode,
-                target: command._targetNode,
-                anchors: ['Right', 'Left']
-              })
-            } else {
-              delete vm.currentRobot._commands[i]
-            }
+            vm.initConnection(command)
           }
         }
       })
+
       vm.instance.setSuspendDrawing(false, true)
     }
   },
@@ -125,6 +116,33 @@ export default {
       vm.instance.makeSource(node, nodeOption)
       if (targetOption) {
         vm.instance.makeTarget(node, targetOption)
+      }
+    },
+    initConnection (command) {
+      let vm = this
+      if (vm.currentRobot._commands[command._sourceNode] &&
+          vm.currentRobot._commands[command._targetNode] &&
+          !vm.currentRobot._commands[command._sourceNode]._nextBlock) {
+        vm.instance.connect({
+          source: command._sourceNode,
+          target: command._targetNode,
+          anchors: ['Right', 'Left']
+        })
+      } else {
+        delete vm.currentRobot._commands[command._id]
+      }
+    },
+    deleteConnection (connection) {
+      let vm = this
+
+      for (var i in vm.currentRobot._commands) {
+        var command = vm.currentRobot._commands[i]
+        if (command instanceof Connection) {
+          if (command._sourceNode === connection.sourceId && command._targetNode === connection.targetId) {
+            console.log(command)
+            delete vm.currentRobot._commands[i]
+          }
+        }
       }
     },
     newMoveNode () {
