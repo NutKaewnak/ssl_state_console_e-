@@ -9,17 +9,20 @@
     {
       "ip": "192.168.0.151",
       "name": "Hulk",
-      "platform": "SSL v.2"
+      "platform": "SSL v.2",
+      "path": "hulk_block.json"
     },
     {
       "ip": "192.168.0.152",
       "name": "Ironman",
-      "platform": "SSL v.2"
+      "platform": "SSL v.2",
+      "path": "ironman_block.json"
     },
     {
       "ip": "192.168.0.153",
       "name": "Thor",
-      "platform": "SSL v.2"
+      "platform": "SSL v.2",
+      "path": "thor_block.json"
     },
     {
       "ip": "192.168.0.154",

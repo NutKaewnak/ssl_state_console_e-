@@ -83,7 +83,7 @@ export default {
             var newNode = document.getElementById(`${command._id}`)
             vm.initNode(newNode, command)
             if (command instanceof StartBlock) {
-              vm.currentRobot._currentBlock = command
+              vm.currentRobot._startBlock = command
             }
           } else if (command instanceof Connection) {
             // check connection TODO: define method

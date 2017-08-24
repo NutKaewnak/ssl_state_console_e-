@@ -19,6 +19,7 @@ class Robot {
     this._saveFile = saveFile
     this._constrain = null
     this._commands = {}
+    this._startBlock = null
     this._currentBlock = null
     this._ws = null
     this._graph = null
@@ -81,6 +82,8 @@ class Robot {
   }
   // check if necessary
   buildCommand () {
+    this._currentBlock = this._startBlock
+
     console.log(this._currentBlock)
     if (this._currentBlock._type === 'StartBlock') {
       console.log('Check correct')
