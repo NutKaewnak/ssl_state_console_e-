@@ -43,7 +43,8 @@
   .container {
     padding: 0px 10px 0px 10px;
     margin-left: -10px;
-    width: 200px;
+    min-width: 150px;
+    width: 180px;
     height: 75vh;
     min-height: 400px;
     overflow: scroll;

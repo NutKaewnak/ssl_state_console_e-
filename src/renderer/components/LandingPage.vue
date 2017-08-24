@@ -167,7 +167,7 @@ export default {
         rgba(229, 229, 229, .9) 100%
       );
     height: 100vh;
-    padding: 60px 80px;
+    padding: 50px 50px;
     width: 100vw;
   }
 
@@ -196,6 +196,7 @@ export default {
 
   .right-side {
     display: flex;
+    margin-top: 5vh;
     flex-direction: column;
     flex: 1 100%;
   }

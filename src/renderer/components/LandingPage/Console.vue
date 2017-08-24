@@ -10,7 +10,7 @@
         <div v-for="cmd in currentRobot._commands">
           <div v-if="cmd && cmd._type !== 'Connection'"
           v-on:dblclick="deleteNode(cmd)"
-          class="w" :id="cmd._id"
+          :class="cmd._type" :id="cmd._id"
           :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">
           {{cmd._type}}
             <div v-if="cmd._targetOption" class="target"></div>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="column box">
+    <div class="column box side-panel">
       <div class="block">
         <a v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE
         </a><br/>
@@ -211,8 +211,9 @@ export default {
 @import url('../../../../node_modules/jsplumb/dist/css/jsplumbtoolkit-defaults.css');
 #diagramContainer {
   border: 1px solid gray;
+  margin: 0 20px;
   height: 70vh; 
-  width: 50vw;
+  width: 60vw;
   position: relative;
   background-color: #eee
 }
@@ -228,7 +229,7 @@ export default {
   touch-action:none;
 }
 
-.w {
+.StartBlock {
   padding: 16px;
   position: absolute;
   z-index: 4;
@@ -248,7 +249,32 @@ export default {
   transition: background-color 0.25s ease-in;
 }
 
-.w:hover {
+.StartBlock:hover {
+  background-color: #5c96bc;
+  color: white;
+}
+
+.MoveBlock {
+  padding: 16px;
+  position: absolute;
+  z-index: 4;
+  border: 1px solid #2e6f9a;
+  box-shadow: 2px 2px 19px #e0e0e0;
+  -o-box-shadow: 2px 2px 19px #e0e0e0;
+  -webkit-box-shadow: 2px 2px 19px #e0e0e0;
+  -moz-box-shadow: 2px 2px 19px #e0e0e0;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  opacity: 0.8;
+  cursor: move;
+  background-color: white;
+  font-size: 10px;
+  -webkit-transition: background-color 0.25s ease-in;
+  -moz-transition: background-color 0.25s ease-in;
+  transition: background-color 0.25s ease-in;
+}
+
+.MoveBlock:hover {
   background-color: #5c96bc;
   color: white;
 }
@@ -329,4 +355,9 @@ export default {
 }
 
 path, .jtk-endpoint { cursor:pointer; }
+
+.side-panel {
+  min-width: 150px;
+  max-width: 200px;
+}
 </style>
