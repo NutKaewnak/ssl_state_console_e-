@@ -209,6 +209,7 @@ export default {
 
 <style scoped>
 @import url('../../../../node_modules/jsplumb/dist/css/jsplumbtoolkit-defaults.css');
+@import url('./css/graph-theme.css');
 #diagramContainer {
   border: 1px solid gray;
   margin: 0 20px;
@@ -227,56 +228,6 @@ export default {
 .demo {
   /* for IE10+ touch devices */
   touch-action:none;
-}
-
-.StartBlock {
-  padding: 16px;
-  position: absolute;
-  z-index: 4;
-  border: 1px solid #2e6f9a;
-  box-shadow: 2px 2px 19px #e0e0e0;
-  -o-box-shadow: 2px 2px 19px #e0e0e0;
-  -webkit-box-shadow: 2px 2px 19px #e0e0e0;
-  -moz-box-shadow: 2px 2px 19px #e0e0e0;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  opacity: 0.8;
-  cursor: move;
-  background-color: white;
-  font-size: 10px;
-  -webkit-transition: background-color 0.25s ease-in;
-  -moz-transition: background-color 0.25s ease-in;
-  transition: background-color 0.25s ease-in;
-}
-
-.StartBlock:hover {
-  background-color: #5c96bc;
-  color: white;
-}
-
-.MoveBlock {
-  padding: 16px;
-  position: absolute;
-  z-index: 4;
-  border: 1px solid #2e6f9a;
-  box-shadow: 2px 2px 19px #e0e0e0;
-  -o-box-shadow: 2px 2px 19px #e0e0e0;
-  -webkit-box-shadow: 2px 2px 19px #e0e0e0;
-  -moz-box-shadow: 2px 2px 19px #e0e0e0;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  opacity: 0.8;
-  cursor: move;
-  background-color: white;
-  font-size: 10px;
-  -webkit-transition: background-color 0.25s ease-in;
-  -moz-transition: background-color 0.25s ease-in;
-  transition: background-color 0.25s ease-in;
-}
-
-.MoveBlock:hover {
-  background-color: #5c96bc;
-  color: white;
 }
 
 .aLabel {
