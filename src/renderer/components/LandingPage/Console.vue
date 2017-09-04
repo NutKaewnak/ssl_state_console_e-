@@ -210,6 +210,7 @@ export default {
 <style scoped>
 @import url('../../../../node_modules/jsplumb/dist/css/jsplumbtoolkit-defaults.css');
 @import url('./css/graph-theme.css');
+
 #diagramContainer {
   border: 1px solid gray;
   margin: 0 20px;
@@ -250,20 +251,6 @@ export default {
   cursor: pointer;
 }
 
-.ep {
-  position: absolute;
-  bottom: 37%;
-  right: 5px;
-  width: 1em;
-  height: 1em;
-  background-color: orange;
-  cursor: pointer;
-  box-shadow: 0 0 2px black;
-  -webkit-transition: -webkit-box-shadow 0.25s ease-in;
-  -moz-transition: -moz-box-shadow 0.25s ease-in;
-  transition: box-shadow 0.25s ease-in;
-}
-
 .input {
   position: absolute;
   bottom: 10%;
@@ -277,20 +264,6 @@ export default {
 
 .ep:hover {
   box-shadow: 0 0 6px black;
-}
-
-.target {
-  position: absolute;
-  bottom: 37%;
-  left: 5px;
-  width: 1em;
-  height: 1em;
-  background-color: gray;
-  cursor: pointer;
-  box-shadow: 0 0 2px black;
-  -webkit-transition: -webkit-box-shadow 0.25s ease-in;
-  -moz-transition: -moz-box-shadow 0.25s ease-in;
-  transition: box-shadow 0.25s ease-in;
 }
 
 .target:hover {

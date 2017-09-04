@@ -12,8 +12,8 @@ class DataBlock extends Block {
     this._nodeOption.maxConnections = -1
     this._data = data
   }
-  getValue () {
-    return this._value
+  getData () {
+    return this._data
   }
 }
 export default DataBlock
