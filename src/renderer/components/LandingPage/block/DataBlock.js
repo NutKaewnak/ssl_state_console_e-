@@ -10,10 +10,19 @@ class DataBlock extends Block {
       this._id = this.makeID()
     }
     this._nodeOption.maxConnections = -1
-    this._data = data
+    this._data = this.classifyData(data)
   }
   getData () {
     return this._data
+  }
+  classifyData (data) {
+    if (data === 'true') {
+      return true
+    } else if (data === 'false') {
+      return false
+    } else if (parseFloat(data)) {
+      return parseFloat(data)
+    }
   }
 }
 export default DataBlock
