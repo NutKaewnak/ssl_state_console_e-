@@ -15,7 +15,8 @@
           {{cmd._type}}
             <div v-if="cmd._targetOption" class="target"></div>
             <div class="ep" :action="cmd._type"></div>
-            <div v-if="cmd._type === 'MoveBlock'" v-on:click="promptMoveVal(cmd._point)" class="input">{{cmd._point}}</div>
+            <div v-if="cmd._type === 'MoveBlock'" v-on:click="" class="input">{{cmd._point}}</div>
+            <div v-if="cmd._type === 'DataBlock'" v-on:click="" class="input">{{cmd._data}}</div>
           </div>
         </div>
       </div>
@@ -26,6 +27,8 @@
         <a v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE
         </a><br/>
         <a v-on:click="newDataNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
+        </a><br/>
+        <a v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
         </a><br/>
       </div>
       <br/>
@@ -111,12 +114,14 @@ export default {
 
       var nodeOption = command._nodeOption
       var targetOption = command._targetOption
-      // initialize draggable elements.
-      vm.instance.draggable(node)
       vm.instance.makeSource(node, nodeOption)
       if (targetOption) {
         vm.instance.makeTarget(node, targetOption)
       }
+      // initialize draggable elements.
+      vm.instance.draggable(node, {
+        grid: [10, 10]
+      })
     },
     initConnection (command) {
       let vm = this
@@ -184,11 +189,6 @@ export default {
         vm.initNode(document.getElementById(command._id), command)
       })
       vm.instance.setSuspendDrawing(false, true)
-    },
-    promptMoveVal (point) {
-      var str = window.prompt('Input new velocity', '0, 1, 0')
-      var newPoint = str.split(',')
-      point = new Point2d(parseInt(newPoint[0]), parseInt(newPoint[1]), parseInt(newPoint[2]))
     },
     deleteNode (cmd) {
       if (cmd._type === 'StartBlock') {

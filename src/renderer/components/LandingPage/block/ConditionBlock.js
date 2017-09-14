@@ -6,14 +6,14 @@ import Block from './Block.js'
  * @param {ConditionBlock} parentBlock
  */
 class ConditionBlock extends Block {
-  constructor (posLeft, posTop, condition, targetTrue, targetFalse, id) {
+  constructor (posLeft, posTop, conditionBlock, targetTrue, targetFalse, id) {
     super(posLeft, posTop, id)
     this._type = 'ConditionBlock'
     if (!id) {
       this._id = this.makeID()
     }
 
-    this._condition = condition
+    this._conditionBlock = conditionBlock
     this._targetTrue = targetTrue
     this._targetFalse = targetFalse
 
@@ -32,9 +32,7 @@ class ConditionBlock extends Block {
    * @param {Robot} robot
    */
   execute (robot) {
-    if (this._condition) {
-      this._nextBlock = 
-    }
+    this._nextBlock = this._conditionBlock.getData() ? this._targetTrue : this._targetFalse
     if (this._nextBlock) {
       console.log(this._nextBlock)
       this.changeStateToNextBlock(robot)
