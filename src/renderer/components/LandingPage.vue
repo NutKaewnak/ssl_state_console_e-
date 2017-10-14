@@ -67,7 +67,7 @@ export default {
       return this.selectedRobots.indexOf(robot) !== -1
     },
     initRobot (_robot) {
-      this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform, _robot.path))
+      this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform, _robot.path, _robot.color))
     },
 
     async buildAndRun () {

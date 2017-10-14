@@ -16,9 +16,9 @@ class DataBlock extends Block {
     return this._data
   }
   classifyData (data) {
-    if (data === 'true') {
+    if (data === 'true' || data === true) {
       return true
-    } else if (data === 'false') {
+    } else if (data === 'false' || data === false) {
       return false
     } else if (parseFloat(data)) {
       return parseFloat(data)

@@ -3,7 +3,7 @@
     <div class="title">Robot Information</div>
     <div class="container">
       <div v-for="i in robots">
-        <div class="items">
+        <div class="items" :style="'border-radius: 0.5em; background-color: ' + i._color">
           <div class="item">
             <div class="name">{{i._name}}</div>
           </div>

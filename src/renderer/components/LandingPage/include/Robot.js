@@ -11,12 +11,14 @@ class Robot {
    * @param {String} ipAddress
    * @param {String} platform code version for SSL robot. Note: Captain is "SSL v.1" (since he is the first Avenger :P).
    * @param {String} saveFile Path to saved json command block.
+   * @param {String} color Default: gray
    */
-  constructor (name, ipAddress, platform, saveFile) {
+  constructor (name, ipAddress, platform, saveFile, color) {
     this._name = name
     this._ip = ipAddress
     this._platform = platform
     this._saveFile = saveFile
+    this._color = (color != null ? color : 'gray')
     this._constrain = null
     this._commands = {}
     this._startBlock = null
@@ -75,7 +77,7 @@ class Robot {
       return
     }
     console.log(this._commands)
-    fs.writeFileSync(`${__dirname}/../data/${this._saveFile}`, JSON.stringify(this._commands, null, ' '))
+    fs.writeFileSync(`${__dirname}/../data/${this._saveFile}`, JSON.stringify(this._commands, null, '  '))
   }
   sendCommand (command) {
     this._ws.send(command)

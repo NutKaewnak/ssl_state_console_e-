@@ -24,11 +24,13 @@
 
     <div class="column box side-panel">
       <div class="block">
-        <a v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE
+        <a v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE_NODE
         </a><br/>
         <a v-on:click="newDataNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
         </a><br/>
-        <a v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
+        <a v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">WAIT_NODE
+        </a><br/>
+        <a v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">CONDITION_NODE
         </a><br/>
       </div>
       <br/>
