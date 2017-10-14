@@ -8,6 +8,7 @@
         :selectedRobots='selectedRobots'
         :robots='robots'
         @selectRobot='selectRobot'
+        @editRobot='editRobot'
         ></robot-selection>
       </div>
 
@@ -45,23 +46,28 @@ export default {
   methods: {
     selectRobot (robot) {
       let vm = this
+
+      if (vm.selectedRobots.indexOf(robot) === -1) {
+        robot.initWebSocket()
+        robot.loadCommand()
+        robot.initGraph()
+        vm.selectedRobots.push(robot)
+      } else {
+        vm.selectedRobots.splice(vm.selectedRobots.indexOf(robot), 1)
+      }
+    },
+    editRobot (robot) {
+      let vm = this
+
       if (vm.currentRobot) {
         vm.currentRobot._graph.reset()
         vm.currentRobot = null
       }
+      robot.initWebSocket()
+      robot.loadCommand()
+      robot.initGraph()
 
-      if (vm.selectedRobots.indexOf(robot) === -1) {
-        vm.selectedRobots.push(robot)
-        robot.initWebSocket()
-        robot.loadCommand()
-        robot.initGraph()
-
-        robot.command = JSON.parse(JSON.stringify(require('./LandingPage/data/testCompile.json')))
-
-        vm.$nextTick(() => { vm.currentRobot = robot })
-      } else {
-        vm.selectedRobots.splice(vm.selectedRobots.indexOf(robot), 1)
-      }
+      vm.$nextTick(() => { vm.currentRobot = robot })
     },
     isSelected (robot) {
       return this.selectedRobots.indexOf(robot) !== -1

@@ -15,7 +15,8 @@
           {{cmd._type}}
             <div v-if="cmd._targetOption" class="target"></div>
             <div class="ep" :action="cmd._type"></div>
-            <div v-if="cmd._type === 'MoveBlock'" v-on:click="" class="input">{{cmd._point}}</div>
+            </br>
+            <div v-if="cmd._type === 'MoveBlock'" v-on:click="" class="input is-small" style="width:90px">{{cmd._point}}</div>
             <div v-if="cmd._type === 'DataBlock'" v-on:click="" class="input">{{cmd._data}}</div>
           </div>
         </div>

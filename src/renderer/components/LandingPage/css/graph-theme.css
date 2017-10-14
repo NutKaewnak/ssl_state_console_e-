@@ -24,6 +24,7 @@
 }
 
 .MoveBlock {
+  width: 120px;
   padding: 16px;
   position: absolute;
   z-index: 4;

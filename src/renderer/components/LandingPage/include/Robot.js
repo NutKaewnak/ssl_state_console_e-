@@ -18,7 +18,7 @@ class Robot {
     this._ip = ipAddress
     this._platform = platform
     this._saveFile = saveFile
-    this._color = (color != null ? color : 'gray')
+    this._color = (color != null ? color : ' is-primary ')
     this._constrain = null
     this._commands = {}
     this._startBlock = null

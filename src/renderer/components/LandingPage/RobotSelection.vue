@@ -3,9 +3,9 @@
     <div class="title">Robot Information</div>
     <div class="container">
       <div v-for="i in robots">
-        <div class="items" :style="'border-radius: 0.5em; background-color: ' + i._color">
+        <div class="items ">
           <div class="item">
-            <div class="name">{{i._name}}</div>
+            <div class="name" >{{i._name}}</div>
           </div>
           <div class="item">
             <div class="name">IP:</div><div class="value">{{i._ip}}</div>
@@ -13,7 +13,10 @@
           <div class="item">
             <div class="name">Platform</div><div class="value">{{i._platform}}</div>
           </div>
-          <div><button :class="{alt:(selectedRobots.indexOf(i) === -1)}" @click="selectRobot(i)">Select</button></div>
+          <div>
+            <input type="checkbox" @click="selectRobot(i)">Select &nbsp;
+            <button :class="['button', {'is-outlined':(i !== currentRobot)}, i._color]" @click="editRobot(i)">Edit</button>
+          </div>
         </div>
       </div>
     </div>
@@ -25,7 +28,11 @@
     props: ['currentRobot', 'selectedRobots', 'robots'],
     methods: {
       selectRobot (ip) {
+        console.log(this.robots)
         this.$emit('selectRobot', ip)
+      },
+      editRobot (robot) {
+        this.$emit('editRobot', robot)
       }
     }
   }
@@ -69,18 +76,17 @@
     font-weight: bold;
   }
 
-  button {
+  .button {
+    height: 35px;
     font-size: .8em;
     cursor: pointer;
     outline: none;
     padding: 0.75em 2em;
-    border-radius: 2em;
+    border-radius: 1em;
     display: inline-block;
     color: #fff;
-    background-color: #4fc08d;
     transition: all 0.15s ease;
     box-sizing: border-box;
-    border: 1px solid #4fc08d;
   }
 
   button.alt {
