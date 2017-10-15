@@ -17,6 +17,23 @@
         :currentRobot='currentRobot'
         @buildAndRun='buildAndRun'
         ></Console>
+
+        <div class="modal" :class="modal.status">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">{{modal.title}}</p>
+              <button class="delete" aria-label="close" @click="resetModal()"></button>
+            </header>
+            <section class="modal-card-body">
+              <!-- Content ... -->
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button is-success">Save changes</button>
+              <button class="button">Cancel</button>
+            </footer>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -36,7 +53,12 @@ export default {
     return {
       currentRobot: null,
       selectedRobots: [],
-      robots: []
+      robots: [],
+      modal: {
+        status: 'is-active',
+        title: '',
+        data: null
+      }
     }
   },
   components: {
@@ -50,7 +72,6 @@ export default {
       if (vm.selectedRobots.indexOf(robot) === -1) {
         robot.initWebSocket()
         robot.loadCommand()
-        robot.initGraph()
         vm.selectedRobots.push(robot)
       } else {
         vm.selectedRobots.splice(vm.selectedRobots.indexOf(robot), 1)
@@ -75,7 +96,16 @@ export default {
     initRobot (_robot) {
       this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform, _robot.path, _robot.color))
     },
+    editBlock (command) {
 
+    },
+    resetModal () {
+      this.modal = {
+        status: '',
+        title: '',
+        data: null
+      }
+    },
     async buildAndRun () {
       this.buildRobotsCommand()
       this.sendCommand()

@@ -77,7 +77,7 @@
 .MoveBlock > .ep {
   position: absolute;
   bottom: 37%;
-  right: -5px;
+  right: 5px;
   width: 1em;
   height: 1em;
   background-color: orange;
@@ -91,7 +91,7 @@
 .ep {
   position: absolute;
   bottom: 37%;
-  right: -5px;
+  right: 5px;
   width: 1em;
   height: 1em;
   background-color: orange;

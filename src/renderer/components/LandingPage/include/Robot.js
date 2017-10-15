@@ -35,21 +35,18 @@ class Robot {
       endpoint: ['Dot', {radius: 1}],
       HoverPaintStyle: {stroke: '#1e8151', strokeWidth: 2},
       ConnectionOverlays: [
-        [ 'Arrow', {
-          location: 1,
+        [ 'PlainArrow', {
+          location: 0.5,
           id: 'arrow',
-          length: 14,
-          foldback: 0.8
-        } ],
-        ['Label', { label: 'FOO', id: 'label', cssClass: 'aLabel' }]
+          length: 14
+        } ]
       ],
-      Container: 'diagramContainer'  // Container: 'canvas'
+      Container: 'diagramContainer'
     })
-    robot._graph.registerConnectionType('basic', { anchor: 'Continuous', connector: 'StateMachine' })
+    robot._graph.registerConnectionType('basic', { anchor: 'Continuous', connector: 'flowchart' })
 
     robot._graph.bind('connection', function (info) {
       robot._commands[info.sourceId]._nextBlock = robot._commands[info.targetId]
-
       var newConnection = blockFactory({
         _type: 'Connection',
         _sourceNode: info.sourceId,
@@ -58,8 +55,6 @@ class Robot {
       robot._commands[newConnection._id] = newConnection
 
       // robot.saveCommand()  // autosave
-
-      info.connection.getOverlay('label').setLabel(info.connection.id)
     })
   }
   loadCommand () {
@@ -70,6 +65,10 @@ class Robot {
     for (var i in arr) {
       var command = blockFactory(arr[i])
       this._commands[command._id] = command
+      if (command._type === 'StartBlock') {
+        console.log('kuy')
+        this._startBlock = this._commands[command._id]
+      }
     }
   }
   saveCommand () {

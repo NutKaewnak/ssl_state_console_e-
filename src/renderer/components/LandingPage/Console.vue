@@ -92,7 +92,6 @@ export default {
               vm.currentRobot._startBlock = command
             }
           } else if (command instanceof Connection) {
-            // check connection TODO: define method
             vm.initConnection(command)
           }
         }
