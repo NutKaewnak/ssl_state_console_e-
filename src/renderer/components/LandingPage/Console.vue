@@ -146,8 +146,7 @@ export default {
         var command = vm.currentRobot._commands[i]
         if (command instanceof Connection) {
           if (command._sourceNode === connection.sourceId && command._targetNode === connection.targetId) {
-            console.log(command)
-            delete vm.currentRobot._commands[i]
+            vm.$delete(vm.currentRobot._commands[i])
           }
         }
       }
@@ -167,12 +166,10 @@ export default {
       vm.$set(vm.currentRobot._commands, command._id, command)
       vm.$nextTick(function () {
         var node = document.getElementById(command._id)
-        console.log(node)
-        console.log('kuy')
         vm.initNode(node, command)
       })
 
-      vm.instance.setSuspendDrawing(false, true)
+      vm.instance.setSuspendDrawing(false)
     },
     newDataNode () {
       let vm = this
@@ -192,7 +189,7 @@ export default {
       vm.$nextTick(function () {
         vm.initNode(document.getElementById(command._id), command)
       })
-      vm.instance.setSuspendDrawing(false, true)
+      vm.instance.setSuspendDrawing(false)
     },
     deleteNode (cmd) {
       let vm = this
@@ -202,14 +199,11 @@ export default {
 
       vm.instance.setSuspendDrawing(true)
       vm.$nextTick(() => {
-        console.log('delete: nextTick')
-        console.log(document.getElementById(cmd._id))
         vm.instance.remove(cmd._id)
         vm.$delete(vm.currentRobot._commands[cmd._id])
-        delete vm.currentRobot._commands[cmd._id]
       })
 
-      vm.instance.setSuspendDrawing(false, true)
+      vm.instance.setSuspendDrawing(false)
     },
     saveGraph () {
       this.currentRobot.saveCommand()
@@ -222,7 +216,7 @@ export default {
 
       vm.instance.setSuspendDrawing(true)
       this.$emit('editObjectByModal', object)
-      vm.instance.setSuspendDrawing(false, true)
+      vm.instance.setSuspendDrawing(false)
     }
   }
 }
