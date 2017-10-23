@@ -113,6 +113,10 @@ export default {
       if (!vm.instance) {
         return
       }
+      // initialize draggable elements.
+      vm.instance.draggable(node, {
+        grid: [20, 20]
+      })
 
       var nodeOption = command._nodeOption
       var targetOption = command._targetOption
@@ -120,10 +124,6 @@ export default {
       if (targetOption) {
         vm.instance.makeTarget(node, targetOption)
       }
-      // initialize draggable elements.
-      vm.instance.draggable(node, {
-        grid: [20, 20]
-      })
     },
     initConnection (command) {
       let vm = this
