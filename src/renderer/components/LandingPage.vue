@@ -16,6 +16,7 @@
         <Console
         :currentRobot='currentRobot'
         @buildAndRun='buildAndRun'
+        @editObjectByModal='editObjectByModal'
         ></Console>
 
         <div class="modal" :class="modal.status">
@@ -27,10 +28,11 @@
             </header>
             <section class="modal-card-body">
               <!-- Content ... -->
+
             </section>
             <footer class="modal-card-foot">
-              <button class="button is-success">Save changes</button>
-              <button class="button">Cancel</button>
+              <button class="button is-success" @click="saveModalDataToObject(usingObjectInModal)">Save changes</button>
+              <button class="button" @click="resetModal()">Cancel</button>
             </footer>
           </div>
         </div>
@@ -44,6 +46,8 @@ import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 import Robot from './LandingPage/include/Robot.js'
 
+import Point2d from './LandingPage/include/model/Point2d.js'
+
 const path = require('path')
 let dataPath = path.normalize('LandingPage/data/')
 
@@ -54,6 +58,7 @@ export default {
       currentRobot: null,
       selectedRobots: [],
       robots: [],
+      usingObjectInModal: null,
       modal: {
         status: 'is-active',
         title: '',
@@ -96,8 +101,13 @@ export default {
     initRobot (_robot) {
       this.robots.push(new Robot(_robot.name, _robot.ip, _robot.platform, _robot.path, _robot.color))
     },
-    editBlock (command) {
-
+    editObjectByModal (object) {
+      let vm = this
+      vm.$nextTick(() => { object._point = new Point2d(0, 0, 0) })
+      console.log(object)
+    },
+    saveModalDataToObject (object) {
+      this.resetModal()
     },
     resetModal () {
       this.modal = {

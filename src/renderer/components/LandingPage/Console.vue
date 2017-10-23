@@ -10,14 +10,14 @@
         <div v-for="cmd in currentRobot._commands">
           <div v-if="cmd && cmd._type !== 'Connection'"
           v-on:dblclick="deleteNode(cmd)"
-          :class="cmd._type" :id="cmd._id"
+          :class="`${cmd._type} jtk-droppable jtk-draggable`" :id="cmd._id"
           :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">
           {{cmd._type}}
             <div v-if="cmd._targetOption" class="target"></div>
             <div class="ep" :action="cmd._type"></div>
             </br>
-            <div v-if="cmd._type === 'MoveBlock'" v-on:click="" class="input is-small" style="width:90px">{{cmd._point}}</div>
-            <div v-if="cmd._type === 'DataBlock'" v-on:click="" class="input">{{cmd._data}}</div>
+            <div v-if="cmd._type === 'MoveBlock'" v-on:click="editObjectByModal(cmd)" class="input is-small" style="width:90px">{{cmd._point}}</div>
+            <div v-if="cmd._type === 'DataBlock'" v-on:click="editObjectByModal(cmd)" class="input">{{cmd._data}}</div>
           </div>
         </div>
       </div>
@@ -25,20 +25,20 @@
 
     <div class="column box side-panel">
       <div class="block">
-        <a v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE_NODE
-        </a><br/>
-        <a v-on:click="newDataNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
-        </a><br/>
-        <a v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">WAIT_NODE
-        </a><br/>
-        <a v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">CONDITION_NODE
-        </a><br/>
+        <button v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE_NODE
+        </button><br/>
+        <button v-on:click="newDataNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
+        </button><br/>
+        <button v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">WAIT_NODE
+        </button><br/>
+        <button v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">CONDITION_NODE
+        </button><br/>
       </div>
       <br/>
-      <a v-on:click="saveGraph()" class="button is-danger">SAVE</a>
+      <button v-on:click="saveGraph()" class="button is-danger">SAVE</button>
       <br/>
       <br/>
-      <a v-on:click="buildAndRun()" class="button is-danger">BUILD AND RUN</a>
+      <button v-on:click="buildAndRun()" class="button is-danger">BUILD AND RUN</button>
     </div>
   </div>
 </template>
@@ -122,7 +122,7 @@ export default {
       }
       // initialize draggable elements.
       vm.instance.draggable(node, {
-        grid: [10, 10]
+        grid: [20, 20]
       })
     },
     initConnection (command) {
@@ -160,16 +160,18 @@ export default {
       }
       var command = blockFactory({
         _type: 'MoveBlock',
-        _point: new Point2d(0, 1, 0),
+        _point: new Point2d(0, 0, 0),
         _time: 1
       })
-      vm.$set(vm.currentRobot._commands, command._id, command)
-
       vm.instance.setSuspendDrawing(true)
-
+      vm.$set(vm.currentRobot._commands, command._id, command)
       vm.$nextTick(function () {
-        vm.initNode(document.getElementById(command._id), command)
+        var node = document.getElementById(command._id)
+        console.log(node)
+        console.log('kuy')
+        vm.initNode(node, command)
       })
+
       vm.instance.setSuspendDrawing(false, true)
     },
     newDataNode () {
@@ -193,17 +195,34 @@ export default {
       vm.instance.setSuspendDrawing(false, true)
     },
     deleteNode (cmd) {
+      let vm = this
       if (cmd._type === 'StartBlock') {
         return
       }
-      this.instance.remove(cmd._id)
-      delete this.currentRobot._commands[cmd._id]
+
+      vm.instance.setSuspendDrawing(true)
+      vm.$nextTick(() => {
+        console.log('delete: nextTick')
+        console.log(document.getElementById(cmd._id))
+        vm.instance.remove(cmd._id)
+        vm.$delete(vm.currentRobot._commands[cmd._id])
+        delete vm.currentRobot._commands[cmd._id]
+      })
+
+      vm.instance.setSuspendDrawing(false, true)
     },
     saveGraph () {
       this.currentRobot.saveCommand()
     },
     buildAndRun () {
       this.$emit('buildAndRun')
+    },
+    editObjectByModal (object) {
+      let vm = this
+
+      vm.instance.setSuspendDrawing(true)
+      this.$emit('editObjectByModal', object)
+      vm.instance.setSuspendDrawing(false, true)
     }
   }
 }
