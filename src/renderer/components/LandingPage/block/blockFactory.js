@@ -5,6 +5,8 @@ import StartBlock from './StartBlock.js'
 import CommandBlock from './CommandBlock.js'
 import DataBlock from './DataBlock.js'
 import MoveBlock from './MoveBlock.js'
+import WaitBlock from './WaitBlock.js'
+import ConditionBlock from './ConditionBlock.js'
 
 /**
  * @param {*} cmd
@@ -23,6 +25,10 @@ function blockFactory (cmd) {
         return new DataBlock(cmd._posLeft, cmd._posTop, cmd._data, cmd._id)
       case 'MoveBlock':
         return new MoveBlock(cmd._posLeft, cmd._posTop, cmd._point, cmd._time, cmd._id)
+      case 'WaitBlock':
+        return new WaitBlock(cmd._posLeft, cmd._posTop, cmd._time, cmd._id)
+      case 'ConditionBlock':
+        return new ConditionBlock(cmd._posLeft, cmd._posTop, cmd._dataBlock, cmd._targetTrue, cmd._targetFalse, cmd._id)
     }
   }
 }

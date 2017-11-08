@@ -13,23 +13,51 @@
           :class="`${cmd._type} jtk-droppable jtk-draggable`" :id="cmd._id"
           :style="`left: ${cmd._posLeft}; top: ${cmd._posTop}`">
           {{cmd._type}}
+
             <div v-if="cmd._targetOption" class="target"></div>
-            <div class="ep" :action="cmd._type"></div>
+            <div v-if="cmd._type==='ConditionBlock'" class="targetData" ></div>
+            <div v-if="cmd._type==='ConditionBlock'" class="epTrue" :action="cmd._type"></div>
+            <div v-if="cmd._type==='ConditionBlock'" class="epFalse" :action="cmd._type"></div>
+            <div v-else class="ep" :action="cmd._type"></div>
             </br>
+
             <div v-if="cmd._type === 'MoveBlock'" v-on:click="editObjectByModal(cmd)" class="input is-small" style="width:90px">{{cmd._point}}</div>
-            <div v-if="cmd._type === 'DataBlock'" v-on:click="editObjectByModal(cmd)" class="input">{{cmd._data}}</div>
+            <div v-if="cmd._type === 'DataBlock'" v-on:click="editObjectByModal(cmd)" class="input is-small" style="width:50px">{{cmd._data}}</div>
+            <div v-if="cmd._type === 'WaitBlock'" v-on:click="editObjectByModal(cmd)" class="input is-small" style="width:50px">{{cmd._time}}</div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="column box side-panel">
-      <div class="block">
+      <div class="block container">
         <button v-on:click="newMoveNode()" class="button is-info is-outlined" id="move-btn">MOVE_NODE
         </button><br/>
         <button v-on:click="newDataNode()" class="button is-info is-outlined" id="data-btn">DATA_NODE
         </button><br/>
-        <button v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">WAIT_NODE
+        <button v-on:click="newWaitNode()" class="button is-info is-outlined" id="data-btn">WAIT_NODE
+        </button><br/>
+        <button v-on:click="newPlusnNode()" class="button is-info is-outlined" id="data-btn">PLUS_NODE
+        </button><br/>
+        <button v-on:click="newMinusNode()" class="button is-info is-outlined" id="data-btn">MINUS_NODE
+        </button><br/>
+        <button v-on:click="newMultiplyNode()" class="button is-info is-outlined" id="data-btn">MULTIPLY_NODE
+        </button><br/>
+        <button v-on:click="newDivideNode()" class="button is-info is-outlined" id="data-btn">DIVIDE_NODE
+        </button><br/>
+        <button v-on:click="newSqrtNode()" class="button is-info is-outlined" id="data-btn">SQRT_NODE
+        </button><br/>
+        <button v-on:click="newSetValueNode()" class="button is-info is-outlined" id="data-btn">SET_VALUE_NODE
+        </button><br/>
+        <button v-on:click="newGreatherNode()" class="button is-info is-outlined" id="data-btn">GREATHER_NODE
+        </button><br/>
+        <button v-on:click="newLesserNode()" class="button is-info is-outlined" id="data-btn">LESSER_NODE
+        </button><br/>
+        <button v-on:click="newEquivalentNode()" class="button is-info is-outlined" id="data-btn">EQUIVALENT_NODE
+        </button><br/>
+        <button v-on:click="newAndNode()" class="button is-info is-outlined" id="data-btn">AND_NODE
+        </button><br/>
+        <button v-on:click="newOrNode()" class="button is-info is-outlined" id="data-btn">OR_NODE
         </button><br/>
         <button v-on:click="newConditionNode()" class="button is-info is-outlined" id="data-btn">CONDITION_NODE
         </button><br/>
@@ -39,6 +67,7 @@
       <br/>
       <br/>
       <button v-on:click="buildAndRun()" class="button is-danger">BUILD AND RUN</button>
+      <br/>
     </div>
   </div>
 </template>
@@ -123,6 +152,15 @@ export default {
       vm.instance.makeSource(node, nodeOption)
       if (targetOption) {
         vm.instance.makeTarget(node, targetOption)
+
+        var targetOption2 = {
+          dropOptions: { hoverClass: 'dragHover' },
+          anchor: 'BottomLeft',
+          allowLoopback: false
+        }
+
+        vm.instance.makeTarget(node, targetOption2)
+        console.log('kuy')
       }
     },
     initConnection (command) {
@@ -171,6 +209,25 @@ export default {
 
       vm.instance.setSuspendDrawing(false)
     },
+    newWaitNode () {
+      let vm = this
+
+      if (!vm.currentRobot) {
+        return
+      }
+      var command = blockFactory({
+        _type: 'WaitBlock',
+        _time: 1
+      })
+      vm.instance.setSuspendDrawing(true)
+      vm.$set(vm.currentRobot._commands, command._id, command)
+      vm.$nextTick(function () {
+        var node = document.getElementById(command._id)
+        vm.initNode(node, command)
+      })
+
+      vm.instance.setSuspendDrawing(false)
+    },
     newDataNode () {
       let vm = this
 
@@ -181,6 +238,25 @@ export default {
       var command = blockFactory({
         _type: 'DataBlock',
         _data: 1
+      })
+      vm.$set(vm.currentRobot._commands, command._id, command)
+
+      vm.instance.setSuspendDrawing(true)
+
+      vm.$nextTick(function () {
+        vm.initNode(document.getElementById(command._id), command)
+      })
+      vm.instance.setSuspendDrawing(false)
+    },
+    newConditionNode () {
+      let vm = this
+
+      if (!vm.currentRobot) {
+        return
+      }
+
+      var command = blockFactory({
+        _type: 'ConditionBlock'
       })
       vm.$set(vm.currentRobot._commands, command._id, command)
 
@@ -233,6 +309,16 @@ export default {
   width: 60vw;
   position: relative;
   background-color: #eee
+}
+
+.container {
+  padding: 0px 10px 0px 10px;
+  margin-left: -10px;
+  min-width: 150px;
+  width: 180px;
+  height: 58vh;
+  min-height: 200px;
+  overflow: scroll;
 }
       
 .item {

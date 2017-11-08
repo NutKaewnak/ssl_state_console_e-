@@ -66,7 +66,6 @@ class Robot {
       var command = blockFactory(arr[i])
       this._commands[command._id] = command
       if (command._type === 'StartBlock') {
-        console.log('kuy')
         this._startBlock = this._commands[command._id]
       }
     }

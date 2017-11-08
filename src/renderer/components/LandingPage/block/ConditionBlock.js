@@ -6,14 +6,14 @@ import Block from './Block.js'
  * @param {ConditionBlock} parentBlock
  */
 class ConditionBlock extends Block {
-  constructor (posLeft, posTop, conditionBlock, targetTrue, targetFalse, id) {
+  constructor (posLeft, posTop, dataBlock, targetTrue, targetFalse, id) {
     super(posLeft, posTop, id)
     this._type = 'ConditionBlock'
     if (!id) {
       this._id = this.makeID()
     }
 
-    this._conditionBlock = conditionBlock
+    this._dataBlock = dataBlock
     this._targetTrue = targetTrue
     this._targetFalse = targetFalse
 
@@ -21,6 +21,17 @@ class ConditionBlock extends Block {
       dropOptions: { hoverClass: 'dragHover' },
       anchor: 'Left',
       allowLoopback: true
+    }
+
+    this._nodeOption = {
+      filter: '.epTrue',
+      anchor: 'Right',
+      connectorStyle: { stroke: '#5c96bc', strokeWidth: 2, outlineStroke: 'transparent', outlineWidth: 4 },
+      connectionType: 'basic',
+      extract: {
+        'action': 'the-action'
+      },
+      maxConnections: 1
     }
   }
   /**
@@ -32,7 +43,7 @@ class ConditionBlock extends Block {
    * @param {Robot} robot
    */
   execute (robot) {
-    this._nextBlock = this._conditionBlock.getData() ? this._targetTrue : this._targetFalse
+    this._nextBlock = this._dataBlock.getData() ? this._targetTrue : this._targetFalse
     if (this._nextBlock) {
       console.log(this._nextBlock)
       this.changeStateToNextBlock(robot)

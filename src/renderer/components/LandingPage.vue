@@ -28,6 +28,9 @@
             </header>
             <section class="modal-card-body">
               <!-- Content ... -->
+              <div v-for="data in modal.data">
+                {{data}}
+              </div>
 
             </section>
             <footer class="modal-card-foot">
@@ -46,7 +49,7 @@ import RobotSelection from './LandingPage/RobotSelection'
 import Console from './LandingPage/Console'
 import Robot from './LandingPage/include/Robot.js'
 
-import Point2d from './LandingPage/include/model/Point2d.js'
+// import Point2d from './LandingPage/include/model/Point2d.js'
 
 const path = require('path')
 let dataPath = path.normalize('LandingPage/data/')
@@ -103,8 +106,9 @@ export default {
     },
     editObjectByModal (object) {
       let vm = this
-      vm.$nextTick(() => { object._point = new Point2d(0, 0, 0) })
       console.log(object)
+      vm.modal.status = 'is-active'
+      vm.modal.data = object._point
     },
     saveModalDataToObject (object) {
       this.resetModal()
