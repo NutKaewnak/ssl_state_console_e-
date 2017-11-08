@@ -15,9 +15,28 @@
           {{cmd._type}}
 
             <div v-if="cmd._targetOption" class="target"></div>
-            <div v-if="cmd._type==='ConditionBlock'" class="targetData" ></div>
+            <div v-if="cmd._type==='ConditionBlock' || 
+            cmd._type==='PlusBlock' ||
+            cmd._type==='MinusBlock' ||
+            cmd._type==='MultBlock' ||
+            cmd._type==='DivideBlock' ||
+            cmd._type==='SqrtBlock' ||
+
+            cmd._type==='SetValueBlock' ||
+
+            cmd._type==='GreatherBlock' ||
+            cmd._type==='LeaserBlock' ||
+            cmd._type==='EquivalentBlock' ||
+            cmd._type==='AndBlock' ||
+            cmd._type==='OrBlock' ||
+            cmd._type==='ConditionBlock'"
+            class="targetData" ></div>
             <div v-if="cmd._type==='ConditionBlock'" class="epTrue" :action="cmd._type"></div>
-            <div v-if="cmd._type==='ConditionBlock'" class="epFalse" :action="cmd._type"></div>
+            <div v-if="cmd._type==='ConditionBlock' ||
+            cmd._type==='SetValueBlock' || 
+            cmd._type==='AndBlock' ||
+            cmd._type==='OrBlock'" 
+            class="epFalse" :action="cmd._type"></div>
             <div v-else class="ep" :action="cmd._type"></div>
             </br>
 
@@ -37,7 +56,7 @@
         </button><br/>
         <button v-on:click="newWaitNode()" class="button is-info is-outlined" id="data-btn">WAIT_NODE
         </button><br/>
-        <button v-on:click="newPlusnNode()" class="button is-info is-outlined" id="data-btn">PLUS_NODE
+        <button v-on:click="newPlusNode()" class="button is-info is-outlined" id="data-btn">PLUS_NODE
         </button><br/>
         <button v-on:click="newMinusNode()" class="button is-info is-outlined" id="data-btn">MINUS_NODE
         </button><br/>
@@ -226,6 +245,27 @@ export default {
         vm.initNode(node, command)
       })
 
+      vm.instance.setSuspendDrawing(false)
+    },
+    newPlusNode () {
+      let vm = this
+
+      if (!vm.currentRobot) {
+        return
+      }
+
+      var command = blockFactory({
+        _type: 'PlusBlock',
+        _input1: 0,
+        _input2: 5
+      })
+      vm.$set(vm.currentRobot._commands, command._id, command)
+
+      vm.instance.setSuspendDrawing(true)
+
+      vm.$nextTick(function () {
+        vm.initNode(document.getElementById(command._id), command)
+      })
       vm.instance.setSuspendDrawing(false)
     },
     newDataNode () {

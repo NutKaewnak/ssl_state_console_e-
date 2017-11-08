@@ -6,6 +6,7 @@ import CommandBlock from './CommandBlock.js'
 import DataBlock from './DataBlock.js'
 import MoveBlock from './MoveBlock.js'
 import WaitBlock from './WaitBlock.js'
+import PlusBlock from './PlusBlock.js'
 import ConditionBlock from './ConditionBlock.js'
 
 /**
@@ -27,6 +28,8 @@ function blockFactory (cmd) {
         return new MoveBlock(cmd._posLeft, cmd._posTop, cmd._point, cmd._time, cmd._id)
       case 'WaitBlock':
         return new WaitBlock(cmd._posLeft, cmd._posTop, cmd._time, cmd._id)
+      case 'PlusBlock':
+        return new PlusBlock(cmd._posLeft, cmd._posTop, cmd._input1, cmd._input2, cmd._id)
       case 'ConditionBlock':
         return new ConditionBlock(cmd._posLeft, cmd._posTop, cmd._dataBlock, cmd._targetTrue, cmd._targetFalse, cmd._id)
     }

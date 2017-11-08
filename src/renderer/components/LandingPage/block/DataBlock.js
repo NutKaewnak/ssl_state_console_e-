@@ -10,12 +10,12 @@ class DataBlock extends Block {
       this._id = this.makeID()
     }
     this._nodeOption.maxConnections = -1
-    this._data = this.classifyData(data)
+    this._data = this.categorizeData(data)
   }
   getData () {
     return this._data
   }
-  classifyData (data) {
+  categorizeData (data) {
     if (data === 'true' || data === true) {
       return true
     } else if (data === 'false' || data === false) {
