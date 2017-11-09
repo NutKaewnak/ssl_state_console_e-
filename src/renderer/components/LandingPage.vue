@@ -23,14 +23,27 @@
           <div class="modal-background"></div>
           <div class="modal-card">
             <header class="modal-card-head">
-              <p class="modal-card-title">{{modal.title}}</p>
+              <p class="modal-card-title">Edit {{modal.title}}</p>
               <button class="delete" aria-label="close" @click="resetModal()"></button>
             </header>
             <section class="modal-card-body">
-              <!-- Content ... -->
+              <!-- Content... ->
               <div v-for="data in modal.data">
-                {{data}}
+                <input class="input" type="text" :placeholder="data">
+                </br>
+                </br>
               </div>
+              -->
+              <!---->
+              W:&nbsp;<input class="input is-small" type="text" placeholder="0">
+              </br></br>
+              X:&nbsp;<input class="input is-small" type="text" placeholder="0">
+              </br></br>
+              Y:&nbsp;<input class="input is-small" type="text" placeholder="0">
+              </br></br>
+              Time:&nbsp;<input class="input is-small" type="text" placeholder="1">
+              </br></br>
+              <!---->
 
             </section>
             <footer class="modal-card-foot">
@@ -109,6 +122,7 @@ export default {
       console.log(object)
       vm.modal.status = 'is-active'
       vm.modal.data = object._point
+      vm.modal.title = object._type
     },
     saveModalDataToObject (object) {
       this.resetModal()
